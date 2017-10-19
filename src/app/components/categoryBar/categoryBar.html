@@ -1,12 +1,11 @@
 <md-toolbar>
   <div class="md-toolbar-tools">
-    <md-button ng-repeat="category in catBarCtrl.categories"
+    <md-button ng-repeat="category in catBarCtrl.factory.categories"
                ng-click="catBarCtrl.selectCategory($index)"
-               ng-class="{'md-raised' : $index == catBarCtrl.selectedIndex}">
+               ng-class="{'md-raised' : category.key == catBarCtrl.factory.activeCategory.key}">
 
       {{category.title}}
 
     </md-button>
   </div>
 </md-toolbar>
-

@@ -3,56 +3,61 @@
 
 	angular.module('rampup').factory('$tasks', TasksFactory);
 
-	function TasksFactory($http) {
+	function TasksFactory($http, $location, $routeParams) {
 		var factory = {};
 
-		var staticData = null;
-		var loadCallbacks = [];
+		factory.categories = [];
+		factory.filteredTasks = [];
+		factory.activeCategory = null;
+		factory.activeTask = null;
 
-		factory.getCategories = getCategories;
-		factory.getTasksInCategory = getTasksInCategory;
-		factory.isDataLoaded = isDataLoaded;
-
-		Object.defineProperty(factory, "onDataLoaded", {
-			get: function() {
-				return function() {
-					loadCallbacks.forEach(function(callback) {
-						callback();
-					}, this);
-				}
-			},
-
-			set: function(callback) {
-				if (isDataLoaded()) return;
-				loadCallbacks.push(callback);
-			}
-		});
-
-		function getCategories() {
-			return isDataLoaded() ? staticData.categories : [];
-		}
-
-		function getTasksInCategory(categoryKey) {
-			if (isDataLoaded()) {
-				for (var i = 0; i < staticData.categories.length; i++) {
-					var category = staticData.categories[i];
-					if (category.key === categoryKey) {
-						return category.tasks;
-					}
-				}
-			}
-
-			return [];
-		}
-
-		function isDataLoaded() {
-			return staticData !== null && staticData !== undefined;
-		}
+		factory.setCategoryActive = setCategoryActive;
+		factory.setTaskActive = setTaskActive;
 
 		$http.get('/data/tasks.json').success(function(responseData) {
-			staticData = responseData;
-			factory.onDataLoaded();
+			factory.categories = responseData.categories;
+			tryParseCategoryAndTaskFromRoute();
 		});
+
+		function setCategoryActive(category) {
+			factory.activeCategory = category;
+			factory.filteredTasks = factory.activeCategory.tasks;
+			factory.activeTask = null;
+			$location.path('/category/' + factory.activeCategory.key);
+		};
+
+		function setTaskActive(task) {
+			factory.activeTask = task;
+			$location.path('/category/' + factory.activeCategory.key + '/task/' + factory.activeTask.key);
+		};
+
+		function getCategoryByKey(categoryKey) {
+			if (!categoryKey) return null;
+
+			for (var i = 0; i < factory.categories.length; i++) {
+				var category = factory.categories[i];
+				if (category.key === categoryKey) return category;
+			}
+		}
+
+		function getTaskByKey(taskKey) {
+			if (!taskKey || !factory.activeCategory) return null;
+
+			for (var i = 0; i < factory.activeCategory.tasks.length; i++) {
+				var task = factory.activeCategory.tasks[i];
+				if (task.key === taskKey) return task;
+			}
+		}
+
+		function tryParseCategoryAndTaskFromRoute() {
+			var category = getCategoryByKey($routeParams.category);
+
+			if (category) {
+				factory.activeCategory = category;
+				factory.filteredTasks = category.tasks;
+				factory.activeTask = getTaskByKey($routeParams.task) || null;
+			}
+		}
 
 		return factory;
 	}

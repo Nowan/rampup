@@ -1,13 +1,12 @@
 (function() {
   'use strict';
 
-  angular
-    .module('rampup')
-    .run(runBlock);
+  angular.module('rampup')
+         .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log) {
-
+  function runBlock($log, $rootScope, $tasks) {
+    
     $log.debug('runBlock end');
   }
 

@@ -1,8 +1,11 @@
-<md-nav-bar md-selected-nav-item="taskBarCtrl.selectedIndex"
+<md-nav-bar md-selected-nav-item="taskBarCtrl.factory.activeTask.key"
+            md-no-ink-bar="true"
+            ng-show="taskBarCtrl.hasTasksToShow()"
             nav-bar-aria-label="task links">
 
-    <md-nav-item ng-repeat="task in taskBarCtrl.tasks"
-                 md-nav-click="taskBarCtrl.selectTask($index)">
+    <md-nav-item ng-repeat="task in taskBarCtrl.factory.filteredTasks"
+                 md-nav-click="taskBarCtrl.selectTask($index)"
+                 name="{{task.key}}">
 
         {{task.title}}
 
