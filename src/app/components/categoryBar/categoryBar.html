@@ -1,7 +1,8 @@
 <md-toolbar>
   <div class="md-toolbar-tools">
     <md-button ng-repeat="category in catBarCtrl.categories"
-               ng-click="catBarCtrl.selectCategory($index)">
+               ng-click="catBarCtrl.selectCategory($index)"
+               ng-class="{'md-raised' : $index == catBarCtrl.selectedIndex}">
 
       {{category.title}}
 
