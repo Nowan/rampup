@@ -6,15 +6,12 @@
     .controller('TaskBarController', TaskBarController);
 
   /** @ngInject */
-  function TaskBarController($routeParams) {
+  function TaskBarController($routeParams, $tasks) {
     var vm = this;
 
     vm.categoryKey = $routeParams.category;
 	vm.selectedIndex = 0;
-    vm.tasks = [
-      { key: vm.categoryKey, title: vm.categoryKey },
-      { key: vm.categoryKey, title: vm.categoryKey }
-    ];
+    vm.tasks = $tasks.getTasksInCategory(vm.categoryKey);
 
 	vm.selectTask = selectTask;
 

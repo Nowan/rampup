@@ -1,0 +1,179 @@
+{
+  "categories": [
+    {
+      "key": "data-structures",
+      "title": "Data Structures",
+      "tasks": [
+        {
+          "key": "array",
+          "title": "Array",
+          "templateUrl": "app/tasks/dataStructures/array/array.html"
+        },
+        {
+          "key": "singly-linked-list",
+          "title": "Singly Linked List",
+          "templateUrl": "app/tasks/dataStructures/singlyLinkedList/singlyLinkedList.html"
+        },
+        {
+          "key": "doubly-linked-list",
+          "title": "Doubly Linked List",
+          "templateUrl": "app/tasks/dataStructures/doublyLinkedList/doublyLinkedList.html"
+        },
+        {
+          "key": "queue",
+          "title": "Queue",
+          "templateUrl": "app/tasks/dataStructures/queue/queue.html"
+        },
+        {
+          "key": "stack",
+          "title": "Stack",
+          "templateUrl": "app/tasks/dataStructures/stack/stack.html"
+        },
+        {
+          "key": "heap",
+          "title": "Heap",
+          "templateUrl": "app/tasks/dataStructures/heap/heap.html"
+        },
+        {
+          "key": "binary-search-tree",
+          "title": "Binary Search Tree",
+          "templateUrl": "app/tasks/dataStructures/binarySearchTree/binarySearchTree.html"
+        }
+      ]
+    },
+    {
+      "key": "complexity",
+      "title": "Complexity",
+      "tasks": [
+        {
+          "key": "o-notation",
+          "title": "O notation",
+          "templateUrl": "app/tasks/sorting/oNotation/oNotation.html"
+        }
+      ]
+    },
+    {
+      "key": "sorting",
+      "title": "Sorting",
+      "tasks": [
+        {
+          "key": "insertion-sort",
+          "title": "Insertion Sort",
+          "templateUrl": "app/tasks/sorting/insertionSort/insertionSort.html"
+        },{
+          "key": "bubble-sort",
+          "title": "Bubble Sort",
+          "templateUrl": "app/tasks/sorting/bubbleSort/bubbleSort.html"
+        },{
+          "key": "quick-sort",
+          "title": "Quick Sort",
+          "templateUrl": "app/tasks/sorting/quickSort/quickSort.html"
+        }
+      ]
+    },
+    {
+      "key": "traversing",
+      "title": "Traversing",
+      "tasks": [
+        {
+          "key": "preorder",
+          "title": "Preorder",
+          "templateUrl": "app/tasks/traversing/preorder/preorder.html"
+        },
+        {
+          "key": "inorder",
+          "title": "Inorder",
+          "templateUrl": "app/tasks/traversing/inorder/inorder.html"
+        },
+        {
+          "key": "postorder",
+          "title": "Postorder",
+          "templateUrl": "app/tasks/traversing/postorder/postorder.html"
+        }
+      ]
+    },
+    {
+      "key": "common-operations",
+      "title": "Common Operations",
+      "tasks": [
+        {
+          "key": "ddl-management",
+          "title": "Doubly Linked List Management",
+          "templateUrl": "app/tasks/commonOperations/ddlManagement/ddlManagement.html"
+        },
+        {
+          "key": "stack-management",
+          "title": "Stack Management",
+          "templateUrl": "app/tasks/commonOperations/stackManagement/stackManagement.html"
+        },
+        {
+          "key": "queue-management",
+          "title": "Queue Management",
+          "templateUrl": "app/tasks/commonOperations/queueManagement/queueManagement.html"
+        },
+        {
+          "key": "bst-management",
+          "title": "Binary Search Tree Management",
+          "templateUrl": "app/tasks/commonOperations/bstManagement/bstManagement.html"
+        }
+      ]
+    },
+    {
+      "key": "design-patterns",
+      "title": "Design Patterns",
+      "tasks": [
+        {
+          "key": "strategy",
+          "title": "Strategy",
+          "templateUrl": "app/tasks/designPatterns/strategy/strategy.html"
+        },
+        {
+          "key": "factory-method",
+          "title": "Factory Method",
+          "templateUrl": "app/tasks/designPatterns/factoryMethod/factoryMethod.html"
+        },
+        {
+          "key": "abstract-factory",
+          "title": "Abstract Factory",
+          "templateUrl": "app/tasks/designPatterns/abstractFactory/abstractFactory.html"
+        },
+        {
+          "key": "decorator",
+          "title": "Decorator",
+          "templateUrl": "app/tasks/designPatterns/decorator/decorator.html"
+        },
+        {
+          "key": "observer",
+          "title": "Observer",
+          "templateUrl": "app/tasks/designPatterns/observer/observer.html"
+        },
+        {
+          "key": "state",
+          "title": "State",
+          "templateUrl": "app/tasks/designPatterns/state/state.html"
+        }
+      ]
+    },
+    {
+      "key": "exercises",
+      "title": "Exercises",
+      "tasks": [
+        {
+          "key": "level-1",
+          "title": "Level 1",
+          "templateUrl": "app/tasks/exercises/level_1/level_1.html"
+        },
+        {
+          "key": "level-2",
+          "title": "Level 2",
+          "templateUrl": "app/tasks/exercises/level_2/level_2.html"
+        },
+        {
+          "key": "level-3",
+          "title": "Level 3",
+          "templateUrl": "app/tasks/exercises/level_3/level_3.html"
+        }
+      ]
+    }
+  ]
+}

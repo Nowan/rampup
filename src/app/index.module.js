@@ -2,6 +2,6 @@
   'use strict';
 
   angular
-    .module('rampup', ['ngAnimate', 'ngCookies', 'ngResource', 'ngRoute', 'ngMaterial', 'toastr']);
+    .module('rampup', ['ngAnimate', 'ngCookies', 'ngResource', 'ngRoute', 'ngMaterial']);
 
 })();

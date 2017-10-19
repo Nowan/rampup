@@ -6,20 +6,17 @@
     .controller('CategoryBarController', CategoryBarController);
 
   /** @ngInject */
-  function CategoryBarController($location) {
+  function CategoryBarController($location, $tasks) {
     var vm = this;
 
     vm.selectedIndex = 0;
-    vm.categories = [
-      { key: "data-structures", title: "Data Structures" },
-      { key: "sorting", title: "Sorting" },
-      { key: "traversing", title: "Traversing" },
-      { key: "common-operations", title: "Common Operations" },
-      { key: "design-patterns", title: "Design Patterns" },
-      { key: "excercises", title: "Excercises" }
-    ];
+    vm.categories = [];
 
     vm.selectCategory = selectCategory;
+
+	$tasks.onDataLoaded = function() {
+	  vm.categories = $tasks.getCategories();
+	};
 
     function selectCategory(categoryIndex) {
       if (vm.selectedIndex === categoryIndex) return;
