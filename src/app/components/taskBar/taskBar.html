@@ -1,0 +1,11 @@
+<md-nav-bar md-selected-nav-item="taskBarCtrl.selectedIndex"
+            nav-bar-aria-label="task links">
+
+    <md-nav-item ng-repeat="task in taskBarCtrl.tasks"
+                 md-nav-click="taskBarCtrl.selectTask($index)">
+
+        {{task.title}}
+
+    </md-nav-item>
+
+</md-nav-bar>
