@@ -1,20 +1,16 @@
 (function() {
-  'use strict';
+	'use strict';
 
-  angular.module('rampup')
-         .controller('CategoryBarController', CategoryBarController);
+	angular.module('rampup')
+		.controller('CategoryBarController', CategoryBarController);
 
-  /** @ngInject */
-  function CategoryBarController($location, $tasks) {
-    var vm = this;
+	/** @ngInject */
+	function CategoryBarController($tasks) {
+		var vm = this;
 
-    vm.factory = $tasks;
+		vm.factory = $tasks;
 
-    vm.selectCategory = selectCategory;
-
-    function selectCategory(categoryIndex) {
-      vm.factory.setCategoryActive(vm.factory.categories[categoryIndex]);
-    }
-  }
+		vm.selectCategory = vm.factory.selectCategory;
+	}
 
 })();

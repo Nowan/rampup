@@ -1,25 +1,21 @@
 (function() {
-  'use strict';
+	'use strict';
 
-  angular.module('rampup')
-         .controller('TaskBarController', TaskBarController);
+	angular.module('rampup')
+		.controller('TaskBarController', TaskBarController);
 
-  /** @ngInject */
-  function TaskBarController($tasks) {
-    var vm = this;
+	/** @ngInject */
+	function TaskBarController($tasks) {
+		var vm = this;
 
-    vm.factory = $tasks;
+		vm.factory = $tasks;
 
-	  vm.selectTask = selectTask;
-    vm.hasTasksToShow = hasTasksToShow;
+		vm.selectTask = vm.factory.selectTask;
+		vm.hasTasksToShow = hasTasksToShow;
 
-	  function selectTask(taskIndex) {
-      vm.factory.setTaskActive(vm.factory.activeCategory.tasks[taskIndex]);
-	  }
-
-    function hasTasksToShow() {
-      return vm.factory.filteredTasks.length > 0;
-    }
-  }
+		function hasTasksToShow() {
+			return vm.factory.filteredTasks.length > 0;
+		}
+	}
 
 })();

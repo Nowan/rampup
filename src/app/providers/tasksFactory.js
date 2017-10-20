@@ -11,24 +11,21 @@
 		factory.activeCategory = null;
 		factory.activeTask = null;
 
-		factory.setCategoryActive = setCategoryActive;
-		factory.setTaskActive = setTaskActive;
+		factory.selectCategory = selectCategory;
+		factory.selectTask = selectTask;
+		factory.selectItemsByKeys = selectItemsByKeys;
 
 		$http.get('/data/tasks.json').success(function(responseData) {
 			factory.categories = responseData.categories;
 			tryParseCategoryAndTaskFromRoute();
 		});
 
-		function setCategoryActive(category) {
-			factory.activeCategory = category;
-			factory.filteredTasks = factory.activeCategory.tasks;
-			factory.activeTask = null;
-			$location.path('/category/' + factory.activeCategory.key);
+		function selectCategory(categoryIndex) {
+			$location.path('/category/' + factory.categories[categoryIndex].key);
 		};
 
-		function setTaskActive(task) {
-			factory.activeTask = task;
-			$location.path('/category/' + factory.activeCategory.key + '/task/' + factory.activeTask.key);
+		function selectTask(taskIndex) {
+			$location.path('/category/' + factory.activeCategory.key + '/task/' + factory.filteredTasks[taskIndex].key);
 		};
 
 		function getCategoryByKey(categoryKey) {
@@ -43,20 +40,22 @@
 		function getTaskByKey(taskKey) {
 			if (!taskKey || !factory.activeCategory) return null;
 
-			for (var i = 0; i < factory.activeCategory.tasks.length; i++) {
-				var task = factory.activeCategory.tasks[i];
+			for (var i = 0; i < factory.filteredTasks.length; i++) {
+				var task = factory.filteredTasks[i];
 				if (task.key === taskKey) return task;
 			}
 		}
 
-		function tryParseCategoryAndTaskFromRoute() {
-			var category = getCategoryByKey($routeParams.category);
+		function selectItemsByKeys(categoryKey, taskKey) {
+			var category = getCategoryByKey(categoryKey);
 
-			if (category) {
-				factory.activeCategory = category;
-				factory.filteredTasks = category.tasks;
-				factory.activeTask = getTaskByKey($routeParams.task) || null;
-			}
+			factory.activeCategory = category;
+			factory.filteredTasks = category ? category.tasks : [];
+			factory.activeTask = getTaskByKey(taskKey);
+		}
+
+		function tryParseCategoryAndTaskFromRoute() {
+			selectItemsByKeys($routeParams.category, $routeParams.task);
 		}
 
 		return factory;

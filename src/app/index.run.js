@@ -1,13 +1,17 @@
 (function() {
-  'use strict';
+	'use strict';
 
-  angular.module('rampup')
-         .run(runBlock);
+	angular.module('rampup')
+		   .run(runBlock);
 
-  /** @ngInject */
-  function runBlock($log, $rootScope, $tasks) {
-    
-    $log.debug('runBlock end');
-  }
+	/** @ngInject */
+	function runBlock($log, $rootScope, $tasks) {
+
+		$rootScope.$on("$routeChangeStart", function(event, next, current) {
+			$tasks.selectItemsByKeys(next.params.category, next.params.task);
+		});
+
+		$log.debug('runBlock end');
+	}
 
 })();
