@@ -1,0 +1,32 @@
+.representationContainer {
+  height: 200px;
+}
+
+.representationItem {
+  width: 50px;
+  margin: 10px;
+}
+
+.representationItem.highlight.regular {
+  background-color: #fafafa;
+}
+
+.representationItem.highlight.regular:hover {
+  background-color: #ffffff;
+}
+
+.representationItem.highlight.compare {
+  background-color: #519351;
+}
+
+.representationItem.highlight.compare:hover {
+  background-color: #51a351;
+}
+
+.representationItem.highlight.active {
+  background-color: #bd362f;
+}
+
+.representationItem.highlight.active:hover {
+  background-color: #dd362f;
+}

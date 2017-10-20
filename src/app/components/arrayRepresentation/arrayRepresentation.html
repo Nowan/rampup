@@ -1,0 +1,15 @@
+<div layout="{{repCtrl.orientation=='vertical' ? 'column' : 'row'}}" layout-fill>
+
+    <div ng-repeat="element in repCtrl.model" layout="column" layout-align="end center">
+        <div>{{element.value}}</div>
+
+        <md-whiteframe class="md-whiteframe-4dp representationItem highlight"
+                       ng-class="element.highlight || 'regular'"
+                       ng-style="{height: repCtrl.getElementLength(element)}"
+                       layout layout-align="center center">
+
+        </md-whiteframe>
+
+    </div>
+
+</div>
