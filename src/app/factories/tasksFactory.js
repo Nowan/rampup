@@ -23,7 +23,7 @@
 				$route.current.templateUrl = factory.activeTask.templateUrl;
 				$route.reload();
 			}
-		});g
+		});
 
 		function selectCategory(categoryIndex) {
 			$location.path('/category/' + factory.categories[categoryIndex].key);

@@ -1,7 +1,6 @@
 (function() {
-  'use strict';
+	'use strict';
 
-  angular
-    .module('rampup', ['ngAnimate', 'ngCookies', 'ngResource', 'ngRoute', 'ngMaterial']);
+	angular.module('rampup', ['ngAnimate', 'ngCookies', 'ngResource', 'ngRoute', 'ngMaterial']);
 
 })();

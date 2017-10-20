@@ -1,7 +1,7 @@
 /* global */
 (function() {
-  'use strict';
+	'use strict';
 
-  angular.module('rampup');
+	angular.module('rampup');
 
 })();

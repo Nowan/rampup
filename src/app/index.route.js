@@ -1,16 +1,15 @@
 (function() {
-  'use strict';
+	'use strict';
 
-  angular
-    .module('rampup')
-    .config(routeConfig);
+	angular.module('rampup')
+		.config(routeConfig);
 
-  function routeConfig($routeProvider) {
-    $routeProvider
-      .when('/', { template: 'Select task to view resolution' })
-      .when('/category/:category', {})
-      .when('/category/:category/task/:task', {})
-      .otherwise({ redirectTo: '/' });
-  }
+	function routeConfig($routeProvider) {
+		$routeProvider
+			.when('/', { template: 'Select task to view resolution' })
+			.when('/category/:category', {})
+			.when('/category/:category/task/:task', {})
+			.otherwise({ redirectTo: '/' });
+	}
 
 })();
