@@ -3,7 +3,7 @@
 
 	angular.module('rampup').factory('$tasks', TasksFactory);
 
-	function TasksFactory($http, $location, $routeParams) {
+	function TasksFactory($http, $location, $routeParams, $route) {
 		var factory = {};
 
 		factory.categories = [];
@@ -18,7 +18,12 @@
 		$http.get('/data/tasks.json').success(function(responseData) {
 			factory.categories = responseData.categories;
 			tryParseCategoryAndTaskFromRoute();
-		});
+
+			if (factory.activeTask) {
+				$route.current.templateUrl = factory.activeTask.templateUrl;
+				$route.reload();
+			}
+		});g
 
 		function selectCategory(categoryIndex) {
 			$location.path('/category/' + factory.categories[categoryIndex].key);

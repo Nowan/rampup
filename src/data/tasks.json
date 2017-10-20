@@ -7,37 +7,37 @@
         {
           "key": "array",
           "title": "Array",
-          "templateUrl": "app/tasks/dataStructures/array/array.html"
+          "templateUrl": "app/pages/dataStructures/array/array.html"
         },
         {
           "key": "singly-linked-list",
           "title": "Singly Linked List",
-          "templateUrl": "app/tasks/dataStructures/singlyLinkedList/singlyLinkedList.html"
+          "templateUrl": "app/pages/dataStructures/singlyLinkedList/singlyLinkedList.html"
         },
         {
           "key": "doubly-linked-list",
           "title": "Doubly Linked List",
-          "templateUrl": "app/tasks/dataStructures/doublyLinkedList/doublyLinkedList.html"
+          "templateUrl": "app/pages/dataStructures/doublyLinkedList/doublyLinkedList.html"
         },
         {
           "key": "queue",
           "title": "Queue",
-          "templateUrl": "app/tasks/dataStructures/queue/queue.html"
+          "templateUrl": "app/pages/dataStructures/queue/queue.html"
         },
         {
           "key": "stack",
           "title": "Stack",
-          "templateUrl": "app/tasks/dataStructures/stack/stack.html"
+          "templateUrl": "app/pages/dataStructures/stack/stack.html"
         },
         {
           "key": "heap",
           "title": "Heap",
-          "templateUrl": "app/tasks/dataStructures/heap/heap.html"
+          "templateUrl": "app/pages/dataStructures/heap/heap.html"
         },
         {
           "key": "binary-search-tree",
           "title": "Binary Search Tree",
-          "templateUrl": "app/tasks/dataStructures/binarySearchTree/binarySearchTree.html"
+          "templateUrl": "app/pages/dataStructures/binarySearchTree/binarySearchTree.html"
         }
       ]
     },
@@ -48,7 +48,7 @@
         {
           "key": "o-notation",
           "title": "O notation",
-          "templateUrl": "app/tasks/sorting/oNotation/oNotation.html"
+          "templateUrl": "app/pages/sorting/oNotation/oNotation.html"
         }
       ]
     },
@@ -59,15 +59,15 @@
         {
           "key": "insertion-sort",
           "title": "Insertion Sort",
-          "templateUrl": "app/tasks/sorting/insertionSort/insertionSort.html"
+          "templateUrl": "app/pages/sorting/insertionSort/insertionSort.html"
         },{
           "key": "bubble-sort",
           "title": "Bubble Sort",
-          "templateUrl": "app/tasks/sorting/bubbleSort/bubbleSort.html"
+          "templateUrl": "app/pages/sorting/bubbleSort/bubbleSort.html"
         },{
           "key": "quick-sort",
           "title": "Quick Sort",
-          "templateUrl": "app/tasks/sorting/quickSort/quickSort.html"
+          "templateUrl": "app/pages/sorting/quickSort/quickSort.html"
         }
       ]
     },
@@ -78,17 +78,17 @@
         {
           "key": "preorder",
           "title": "Preorder",
-          "templateUrl": "app/tasks/traversing/preorder/preorder.html"
+          "templateUrl": "app/pages/traversing/preorder/preorder.html"
         },
         {
           "key": "inorder",
           "title": "Inorder",
-          "templateUrl": "app/tasks/traversing/inorder/inorder.html"
+          "templateUrl": "app/pages/traversing/inorder/inorder.html"
         },
         {
           "key": "postorder",
           "title": "Postorder",
-          "templateUrl": "app/tasks/traversing/postorder/postorder.html"
+          "templateUrl": "app/pages/traversing/postorder/postorder.html"
         }
       ]
     },
@@ -99,22 +99,22 @@
         {
           "key": "ddl-management",
           "title": "Doubly Linked List Management",
-          "templateUrl": "app/tasks/commonOperations/ddlManagement/ddlManagement.html"
+          "templateUrl": "app/pages/commonOperations/ddlManagement/ddlManagement.html"
         },
         {
           "key": "stack-management",
           "title": "Stack Management",
-          "templateUrl": "app/tasks/commonOperations/stackManagement/stackManagement.html"
+          "templateUrl": "app/pages/commonOperations/stackManagement/stackManagement.html"
         },
         {
           "key": "queue-management",
           "title": "Queue Management",
-          "templateUrl": "app/tasks/commonOperations/queueManagement/queueManagement.html"
+          "templateUrl": "app/pages/commonOperations/queueManagement/queueManagement.html"
         },
         {
           "key": "bst-management",
           "title": "Binary Search Tree Management",
-          "templateUrl": "app/tasks/commonOperations/bstManagement/bstManagement.html"
+          "templateUrl": "app/pages/commonOperations/bstManagement/bstManagement.html"
         }
       ]
     },
@@ -125,32 +125,32 @@
         {
           "key": "strategy",
           "title": "Strategy",
-          "templateUrl": "app/tasks/designPatterns/strategy/strategy.html"
+          "templateUrl": "app/pages/designPatterns/strategy/strategy.html"
         },
         {
           "key": "factory-method",
           "title": "Factory Method",
-          "templateUrl": "app/tasks/designPatterns/factoryMethod/factoryMethod.html"
+          "templateUrl": "app/pages/designPatterns/factoryMethod/factoryMethod.html"
         },
         {
           "key": "abstract-factory",
           "title": "Abstract Factory",
-          "templateUrl": "app/tasks/designPatterns/abstractFactory/abstractFactory.html"
+          "templateUrl": "app/pages/designPatterns/abstractFactory/abstractFactory.html"
         },
         {
           "key": "decorator",
           "title": "Decorator",
-          "templateUrl": "app/tasks/designPatterns/decorator/decorator.html"
+          "templateUrl": "app/pages/designPatterns/decorator/decorator.html"
         },
         {
           "key": "observer",
           "title": "Observer",
-          "templateUrl": "app/tasks/designPatterns/observer/observer.html"
+          "templateUrl": "app/pages/designPatterns/observer/observer.html"
         },
         {
           "key": "state",
           "title": "State",
-          "templateUrl": "app/tasks/designPatterns/state/state.html"
+          "templateUrl": "app/pages/designPatterns/state/state.html"
         }
       ]
     },
@@ -161,17 +161,17 @@
         {
           "key": "level-1",
           "title": "Level 1",
-          "templateUrl": "app/tasks/exercises/level_1/level_1.html"
+          "templateUrl": "app/pages/exercises/level_1/level_1.html"
         },
         {
           "key": "level-2",
           "title": "Level 2",
-          "templateUrl": "app/tasks/exercises/level_2/level_2.html"
+          "templateUrl": "app/pages/exercises/level_2/level_2.html"
         },
         {
           "key": "level-3",
           "title": "Level 3",
-          "templateUrl": "app/tasks/exercises/level_3/level_3.html"
+          "templateUrl": "app/pages/exercises/level_3/level_3.html"
         }
       ]
     }
