@@ -88,27 +88,51 @@
 		function composeSortingSteps() {
 			var steps = [];
 			vm.sandbox = vm.originalArray.slice(0);
-
-			var swapped;
-			do {
-				swapped = false;
-				for (var i = 0; i < vm.sandbox.length - 1; i++) {
-					steps.push($stepFactory.newHighlightStep().active(i).compare(i + 1));
-					if (vm.sandbox[i].value > vm.sandbox[i + 1].value) {
-						var temp = vm.sandbox[i];
-						vm.sandbox[i] = vm.sandbox[i + 1];
-						vm.sandbox[i + 1] = temp;
-						swapped = true;
-						steps.push($stepFactory.newSwapStep(i, i + 1));
-					}
-					else {
-						steps.push($stepFactory.newWaitStep());
-					}
-					steps.push($stepFactory.newHighlightStep().regular(i, i + 1));
-				}
-			} while (swapped);
+			quickSort(vm.sandbox, 0, vm.sandbox.length - 1);
 
 			return steps;
+		}
+
+		function quickSort(array, lowIndex, highIndex, steps) {
+			// Lomuto partition scheme
+			if (lowIndex < highIndex) {
+				var partitionIndex = partition.apply(this, arguments);
+				quickSort(array, lowIndex, partitionIndex - 1);
+				quickSort(array, partitionIndex + 1, highIndex);
+			}
+		}
+
+		function partition(array, lowIndex, highIndex, steps) {
+			switch (vm.selectedMode) {
+				case vm.pivotModes[1]:
+					return partitionLastElementAsPivot.apply(this, arguments);
+				default:
+					return partitionLastElementAsPivot.apply(this, arguments);
+			}
+		}
+
+		function partitionLastElementAsPivot(array, lowIndex, highIndex, steps) {
+			var pivot = array[highIndex];
+			var i = lowIndex - 1;
+
+			for (var j = lowIndex; j < highIndex; j++) {
+				if (array[j].value < pivot.value) {
+					i++;
+					swapElements(array, i, j);
+				}
+			}
+
+			if (array[highIndex].value < array[i + 1].value) {
+				swapElements(array, i + 1, highIndex);
+			}
+
+			return i + 1;
+		}
+
+		function swapElements(array, indexA, indexB) {
+			var tmp = array[indexA];
+			array[indexA] = array[indexB];
+			array[indexB] = tmp;
 		}
 
 		function runAnimationStep(animationSteps, stepIndex) {
