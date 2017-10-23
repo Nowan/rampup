@@ -1,0 +1,45 @@
+<md-content ng-controller="QuickSortController as taskCtrl" layout="column" layout-align="center center">
+    <div><h1>{{taskCtrl.title}}</h1></div>
+
+    <array-representation model="taskCtrl.originalArray" style="height: 300px"></array-representation>
+
+    <div layout="row" style="margin-top: 50px;">
+        <div layout="column" layout-align="center fill">
+            <md-input-container>
+                <label>Array size</label>
+                <input type="number"
+                       ng-model="taskCtrl.arraySize"
+                       ng-change="taskCtrl.onArraySizeChange()"
+                       ng-disabled="taskCtrl.isSortingPending">
+            </md-input-container>
+
+            <md-input-container>
+                <label>Pivot selection</label>
+                <md-select ng-model="taskCtrl.selectedMode"
+                           ng-disabled="taskCtrl.isSortingPending">
+                    <md-option ng-repeat="mode in taskCtrl.pivotModes"
+                               ng-value="mode">
+                        {{mode}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+
+        <div layout="row" layout-align="start center" style="padding-left: 20px;">
+            <md-button class="md-raised"
+                       ng-click="taskCtrl.onRandomizeClick()"
+                       ng-disabled="taskCtrl.isSortingPending">
+                Randomize
+            </md-button>
+
+            <md-button class="md-raised"
+                       ng-class="taskCtrl.isSortingPending ? '' : 'md-primary'"
+                       ng-click="taskCtrl.isSortingPending ? taskCtrl.onSkipClick() : taskCtrl.onSortClick()">
+                {{taskCtrl.isSortingPending ? 'Skip' : 'Sort'}}
+            </md-button>
+        </div>
+    </div>
+
+    <array-representation model="taskCtrl.sortedArray" style="height: 300px"></array-representation>
+
+</md-content>
