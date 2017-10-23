@@ -118,15 +118,34 @@
 		function partitionFirstElementAsPivot(array, lowIndex, highIndex, steps) {
 			var pivot = array[lowIndex];
 			var partitionIndex = lowIndex;
+			var i;
 
-			for (var j = lowIndex + 1; j <= highIndex; j++) {
-				if (array[j].value < pivot.value) {
-					partitionIndex++
-					swapElements(array, partitionIndex, j);
+			var highlightStep = $stepFactory.newHighlightStep();
+			for (i = lowIndex + 1; i <= highIndex; i++) highlightStep.compare(i);
+			highlightStep.accent(lowIndex);
+			steps.push(highlightStep);
+
+			for (i = lowIndex + 1; i <= highIndex; i++) {
+				steps.push($stepFactory.newHighlightStep().active(i));
+
+				if (array[i].value <= pivot.value) {
+					partitionIndex++;
+					swapElements(array, partitionIndex, i);
+					steps.push($stepFactory.newSwapStep(partitionIndex, i));
+					steps.push($stepFactory.newHighlightStep().compare(partitionIndex));
 				}
+				else
+					steps.push($stepFactory.newHighlightStep().compare(i));
 			}
 
 			swapElements(array, partitionIndex, lowIndex);
+			steps.push($stepFactory.newSwapStep(partitionIndex, lowIndex));
+			steps.push($stepFactory.newWaitStep());
+			steps.push($stepFactory.newWaitStep());
+
+			highlightStep = $stepFactory.newHighlightStep();
+			for (i = 0; i < array.length; i++) highlightStep.regular(i);
+			steps.push(highlightStep);
 
 			return partitionIndex;
 		}
@@ -162,10 +181,24 @@
 			}
 
 			highlightStep = $stepFactory.newHighlightStep();
-			for (i = 0; i < array.length; i++) {
-				highlightStep.regular(i);
-			}
+			for (i = 0; i < array.length; i++) highlightStep.regular(i);
 			steps.push(highlightStep);
+
+			return partitionIndex;
+		}
+
+		function partitionRandomElementAsPivot(array, lowIndex, highIndex, steps) {
+			var pivot = array[lowIndex];
+			var partitionIndex = lowIndex;
+
+			for (var j = lowIndex + 1; j <= highIndex; j++) {
+				if (array[j].value < pivot.value) {
+					partitionIndex++
+					swapElements(array, partitionIndex, j);
+				}
+			}
+
+			swapElements(array, partitionIndex, lowIndex);
 
 			return partitionIndex;
 		}
