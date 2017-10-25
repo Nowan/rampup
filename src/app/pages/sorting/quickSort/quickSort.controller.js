@@ -84,7 +84,7 @@
 					currentStep++;
 					if (currentStep >= steps.length) vm.isSortingPending = false;
 				}
-			}, 250, steps.length);
+			}, 500, steps.length);
 		}
 
 		function composeSortingSteps() {
@@ -120,32 +120,39 @@
 			var partitionIndex = lowIndex;
 			var i;
 
-			var highlightStep = $stepFactory.newHighlightStep();
-			for (i = lowIndex + 1; i <= highIndex; i++) highlightStep.compare(i);
-			highlightStep.accent(lowIndex);
-			steps.push(highlightStep);
+			var tmpStep = $stepFactory.newIdleStep().static(lowIndex);
+			for (i = lowIndex + 1; i <= highIndex; i++) tmpStep.compare(i);
+			steps.push(tmpStep);
 
 			for (i = lowIndex + 1; i <= highIndex; i++) {
-				steps.push($stepFactory.newHighlightStep().active(i));
+				steps.push($stepFactory.newIdleStep().active(i));
 
 				if (array[i].value <= pivot.value) {
 					partitionIndex++;
 					swapElements(array, partitionIndex, i);
-					steps.push($stepFactory.newSwapStep(partitionIndex, i));
-					steps.push($stepFactory.newHighlightStep().compare(partitionIndex));
+
+					tmpStep = $stepFactory.newSwapStep(partitionIndex, i);
+					steps.push(partitionIndex === i ? tmpStep : tmpStep.compare(i));
+
+					tmpStep = $stepFactory.newIdleStep().accent(partitionIndex);
+					steps.push(partitionIndex === lowIndex + 1 ? tmpStep.static(partitionIndex - 1) : tmpStep.compare(partitionIndex - 1));
 				}
-				else
-					steps.push($stepFactory.newHighlightStep().compare(i));
+				else {
+					tmpStep = $stepFactory.newIdleStep().compare(i);
+					steps.push(i === partitionIndex ? tmpStep.accent(i) : tmpStep);
+				}
+
+				//tmpStep = $stepFactory.newIdleStep();
+				//steps.push(i === partitionIndex + 1 ? tmpStep.accent(i) : tmpStep.compare(i));
+
 			}
 
 			swapElements(array, partitionIndex, lowIndex);
-			steps.push($stepFactory.newSwapStep(partitionIndex, lowIndex));
-			steps.push($stepFactory.newWaitStep());
-			steps.push($stepFactory.newWaitStep());
+			steps.push($stepFactory.newSwapStep(partitionIndex, lowIndex).compare(lowIndex));
 
-			highlightStep = $stepFactory.newHighlightStep();
-			for (i = 0; i < array.length; i++) highlightStep.regular(i);
-			steps.push(highlightStep);
+			tmpStep = $stepFactory.newIdleStep();
+			for (i = lowIndex; i <= highIndex; i++) tmpStep.regular(i);
+			steps.push(tmpStep);
 
 			return partitionIndex;
 		}
@@ -157,7 +164,7 @@
 
 			var highlightStep = $stepFactory.newHighlightStep();
 			for (i = lowIndex; i < highIndex; i++) highlightStep.compare(i);
-			highlightStep.accent(highIndex);
+			highlightStep.static(highIndex);
 			steps.push(highlightStep);
 
 			for (i = lowIndex; i < highIndex; i++) {
@@ -187,22 +194,6 @@
 			return partitionIndex;
 		}
 
-		function partitionRandomElementAsPivot(array, lowIndex, highIndex, steps) {
-			var pivot = array[lowIndex];
-			var partitionIndex = lowIndex;
-
-			for (var j = lowIndex + 1; j <= highIndex; j++) {
-				if (array[j].value < pivot.value) {
-					partitionIndex++
-					swapElements(array, partitionIndex, j);
-				}
-			}
-
-			swapElements(array, partitionIndex, lowIndex);
-
-			return partitionIndex;
-		}
-
 		function swapElements(array, indexA, indexB) {
 			var tmp = array[indexA];
 			array[indexA] = array[indexB];
@@ -213,16 +204,18 @@
 			var step = animationSteps[stepIndex];
 
 			switch (step.action) {
-				case SortingStepAction.Highlight:
-					for (var elementIndex in step.highlights) {
-						vm.sortedArray[elementIndex].highlight = step.highlights[elementIndex];
-					}
+				case SortingStepAction.Idle:
+
 					break;
 				case SortingStepAction.Swap:
 					var tmp = vm.sortedArray[step.sourceIndex];
 					vm.sortedArray[step.sourceIndex] = vm.sortedArray[step.targetIndex];
 					vm.sortedArray[step.targetIndex] = tmp;
 					break;
+			}
+
+			for (var elementIndex in step.highlights) {
+				vm.sortedArray[elementIndex].highlight = step.highlights[elementIndex];
 			}
 		}
 	}

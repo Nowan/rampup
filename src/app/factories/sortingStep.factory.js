@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('rampup')
-		.value('SortingStepAction', { Highlight: 0, Swap: 1, Wait: 2 })
+		.value('SortingStepAction', { Swap: 0, Idle: 1 })
 		.factory('$stepFactory', SortingStepFactory);
 
 	function SortingStepFactory(SortingStepAction) {
@@ -15,45 +15,33 @@
 				return step;
 			},
 
-			newHighlightStep: function() {
-				var step = new SortingStep(SortingStepAction.Highlight);
-				step.highlights = {};
-
-				step.active = function(/*...*/) {
-					for (var i = 0; i < arguments.length; i++)
-						this.highlights[arguments[i]] = 'active';
-					return this;
-				};
-
-				step.accent = function(/*...*/) {
-					for (var i = 0; i < arguments.length; i++)
-						this.highlights[arguments[i]] = 'accent';
-					return this;
-				};
-
-				step.compare = function(/*...*/) {
-					for (var i = 0; i < arguments.length; i++)
-						this.highlights[arguments[i]] = 'compare';
-					return this;
-				};
-
-				step.regular = function(/*...*/) {
-					for (var i = 0; i < arguments.length; i++)
-						this.highlights[arguments[i]] = 'regular';
-					return this;
-				};
-
-				return step;
-			},
-
-			newWaitStep: function() {
-				return new SortingStep(SortingStepAction.Wait);
+			newIdleStep: function() {
+				return new SortingStep(SortingStepAction.Idle);
 			}
 
 		}
 
 		function SortingStep(action) {
 			this.action = action;
+			this.highlights = {};
+
+			this.defineHighlightAssigningFunction = defineHighlightAssigningFunction.bind(this);
+
+			this.defineHighlightAssigningFunction('accent');
+			this.defineHighlightAssigningFunction('active');
+			this.defineHighlightAssigningFunction('regular');
+			this.defineHighlightAssigningFunction('compare');
+			this.defineHighlightAssigningFunction('static');
+
+			function defineHighlightAssigningFunction(highlightKey) {
+				Object.defineProperty(this, highlightKey, {
+					value: function(/*...*/) {
+						for (var i = 0; i < arguments.length; i++)
+							this.highlights[arguments[i]] = highlightKey;
+						return this;
+					}
+				})
+			}
 		}
 	}
 

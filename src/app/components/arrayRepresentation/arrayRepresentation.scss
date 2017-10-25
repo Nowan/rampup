@@ -31,10 +31,18 @@
   background-color: #dd362f;
 }
 
-.representationItem.highlight.accent {
+.representationItem.highlight.static {
   background-color: #323232;
 }
 
-.representationItem.highlight.accent:hover {
+.representationItem.highlight.static:hover {
   background-color: #424242;
+}
+
+.representationItem.highlight.accent {
+  background-color: #f89406;
+}
+
+.representationItem.highlight.accent:hover {
+  background-color: #ffa406;
 }
