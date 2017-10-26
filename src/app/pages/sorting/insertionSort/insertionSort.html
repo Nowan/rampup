@@ -1,0 +1,30 @@
+<md-content ng-controller="InsertionSortController as taskCtrl" layout="column" layout-align="center center">
+    <div><h1>{{taskCtrl.title}}</h1></div>
+
+    <array-representation model="taskCtrl.originalArray" style="height: 300px"></array-representation>
+
+    <div>
+        <md-input-container>
+            <label>Array size</label>
+            <input type="number"
+                   ng-model="taskCtrl.arraySize"
+                   ng-change="taskCtrl.onArraySizeChange()"
+                   ng-disabled="taskCtrl.isSortingPending">
+        </md-input-container>
+
+        <md-button class="md-raised"
+                   ng-click="taskCtrl.onRandomizeClick()"
+                   ng-disabled="taskCtrl.isSortingPending">
+          Randomize
+        </md-button>
+
+        <md-button class="md-raised"
+                   ng-class="taskCtrl.isSortingPending ? '' : 'md-primary'"
+                   ng-click="taskCtrl.isSortingPending ? taskCtrl.onSkipClick() : taskCtrl.onSortClick()">
+          {{taskCtrl.isSortingPending ? 'Skip' : 'Sort'}}
+        </md-button>
+    </div>
+
+    <array-representation model="taskCtrl.sortedArray" style="height: 300px"></array-representation>
+
+</md-content>
