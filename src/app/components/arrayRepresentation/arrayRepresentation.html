@@ -7,6 +7,8 @@
                        ng-class="element.highlight || 'regular'"
                        ng-style="{height: repCtrl.getElementHeight(element), width: repCtrl.getElementWidth(element)}"
                        ng-click="repCtrl.onClick(element)"
+                       ng-mouseenter="repCtrl.onMouseEnter(element)"
+                       ng-mouseleave="repCtrl.onMouseLeave(element)"
                        layout layout-align="center center">
             <div ng-hide="repCtrl.labelPosition == 'outside'">{{element.value}}</div>
         </md-whiteframe>

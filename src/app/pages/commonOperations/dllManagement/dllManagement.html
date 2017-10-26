@@ -2,29 +2,39 @@
     <div><h1>{{taskCtrl.title}}</h1></div>
 
     <div layout="row" layout-align="center fill" layout-fill>
-        <div layout="column" layout-align="center center" layout-fill>
+        <div layout="column" layout-align="start center" layout-fill>
             <div><h3>Doubly Linked List</h3></div>
 
-            <div layout="row" layout-align="start center">
+            <array-representation model="taskCtrl.listRepresentationModel"
+                                  element-weight="50px"
+                                  element-length="50px"
+                                  on-mouse-enter="taskCtrl.onMouseEnterElement"
+                                  on-mouse-leave="taskCtrl.onMouseLeaveElement">
+            </array-representation>
 
-                <array-representation model="taskCtrl.representationArray"
-                                      element-weight="50px"
-                                      element-length="50px"
-                                      on-click="taskCtrl.onElementClick">
-                </array-representation>
+            <md-divider></md-divider>
 
-                <md-button class="md-fab md-mini md-primary" aria-label="Add element" ng-click="taskCtrl.onAddElementClick()">
-                    <md-icon md-svg-src="assets/icons/ic_add_white_24px.svg"></md-icon>
-                </md-button>
+            <div layout="row" layout-align="center center">
+              <md-button class="md-primary md-raised"
+                         style="padding-right: 10px"
+                         ng-click="taskCtrl.onAddElementClick()"
+                         aria-label="Add element">
+                  <md-icon md-svg-src="assets/icons/ic_add_white_24px.svg"></md-icon>
+                  Add element
+              </md-button>
             </div>
         </div>
 
+        <md-divider></md-divider>
+
         <div layout="column" layout-align="start center" layout-fill>
             <div><h3>Memory Array</h3></div>
-            <array-representation model="taskCtrl.memoryArray"
+            <array-representation model="taskCtrl.bufferRepresentationModel"
                                   orientation="vertical"
                                   element-weight="50px"
-                                  element-length="200px">
+                                  element-length="200px"
+                                  on-mouse-enter="taskCtrl.onMouseEnterElement"
+                                  on-mouse-leave="taskCtrl.onMouseLeaveElement">
             </array-representation>
         </div>
     </div>

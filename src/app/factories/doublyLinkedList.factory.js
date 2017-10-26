@@ -17,8 +17,10 @@
 		};
 
 		DoublyLinkedList.prototype.insert = function(object, index) {
+			if (index > this._length) throw "Invalid index " + index;
+
 			var node = new Node(object);
-			var fwNode = this.getNodeAt(index);
+			var fwNode = this._length > 0 ? this.getNodeAt(index) : null;
 			var bwNode = index > 0 ? this.getNodeAt(index - 1) : null;
 
 			node._address = this._memoryBuffer.add(node);
@@ -28,10 +30,14 @@
 			updateNodeLinks(fwNode, node, null);
 
 			if (index === 0) this._head = node;
-			if (index === this._length - 1) this._tail = node;
+			if (index === this._length) this._tail = node;
 
 			this._length++;
 			return node;
+		};
+
+		DoublyLinkedList.prototype.getLength = function() {
+			return this._length;
 		};
 
 		DoublyLinkedList.prototype.getNodeAt = function(index) {
@@ -47,6 +53,26 @@
 
 			return node || null;
 		};
+
+		DoublyLinkedList.prototype.isEmpty = function() {
+			return this._length > 0;
+		};
+
+		DoublyLinkedList.prototype.isNodeFirst = function(node) {
+			return node === this._head;
+		};
+
+		DoublyLinkedList.prototype.isNodeLast = function(node) {
+			return node === this._tail;
+		};
+
+		DoublyLinkedList.prototype.forEach = function(callback, context) {
+			var node = this._head;
+			for (var i = 0; i < this._length; i++) {
+				 callback.call(context, node, i);
+				 node = this._memoryBuffer.getByAddress(node.forwardLink);
+			}
+		}
 
 		function updateNodeLinks(node, backwardNode, forwardNode) {
 			if (node) {

@@ -20,7 +20,9 @@
 				labelPosition: '@',
 				elementWeight: '@',
 				elementLength: '@',
-				onClick: '='
+				onClick: '=',
+				onMouseEnter: '=',
+				onMouseLeave: '='
 			},
 			css: 'app/components/arrayRepresentation/arrayRepresentation.scss'
 		};

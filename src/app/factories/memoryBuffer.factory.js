@@ -8,6 +8,7 @@
 
 		function MemoryBuffer() {
 			this._buffer = [];
+			this._counter = 0;
 		}
 
 		MemoryBuffer.prototype.add = function(object) {
@@ -34,7 +35,9 @@
 		};
 
 		MemoryBuffer.prototype.generateAddress = function() {
-			return Math.random().toString(36).substring(2, 15);
+			var address = '0x' + ("0000" + this._counter.toString(16)).substr(-4);
+    	this._counter++;
+			return address;
 		};
 
 		return MemoryBuffer;
