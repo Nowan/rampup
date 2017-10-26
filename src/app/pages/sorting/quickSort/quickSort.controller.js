@@ -13,7 +13,7 @@
 		vm.originalArray = generateUnsortedArray();
 		vm.sortedArray = [];
 		vm.pivotModes = [ "First element", "Last element", "Middle element", "Random element" ];
-		vm.selectedMode = vm.pivotModes[2];
+		vm.selectedMode = vm.pivotModes[0];
 		vm.sandbox = [];
 		vm.maxArraySize = 25;
 		vm.minArraySize = 5;
@@ -117,6 +117,8 @@
 					return partitionLastElementAsPivot.apply(this, arguments);
 				case vm.pivotModes[2]:
 					return partitionMiddleElementAsPivot.apply(this, arguments);
+				case vm.pivotModes[3]:
+					return partitionRandomElementAsPivot.apply(this, arguments);
 				default:
 					return partitionLastElementAsPivot.apply(this, arguments);
 			}
@@ -251,6 +253,55 @@
 
 			return li;
 		}
+
+		function partitionRandomElementAsPivot(array, lowIndex, highIndex, steps) {
+			// Hoare partition scheme
+			var randomIndex = Math.floor(Math.random() * (highIndex - lowIndex)) + lowIndex;
+			var pivot = array[randomIndex];
+			var li = lowIndex;
+			var ri = highIndex;
+			var i;
+
+			var tmpStep = $stepFactory.newIdleStep();
+			for (i = lowIndex; i <= highIndex; i++) tmpStep.compare(i);
+			steps.push(tmpStep.static(randomIndex));
+
+			while (li <= ri) {
+				steps.push($stepFactory.newIdleStep().active(li, ri));
+
+				while (array[li].value < pivot.value) {
+					li++;
+					steps.push($stepFactory.newIdleStep().active(li).compare(li - 1));
+				}
+
+				steps.push($stepFactory.newIdleStep().accent(li));
+
+				while (array[ri].value > pivot.value) {
+					ri--;
+					steps.push($stepFactory.newIdleStep().active(ri).compare(ri + 1));
+				}
+
+				steps.push($stepFactory.newIdleStep().accent(ri));
+
+				if (li <= ri) {
+					swapElements(array, li, ri);
+					steps.push($stepFactory.newSwapStep(li, ri));
+					steps.push($stepFactory.newIdleStep().compare(li, ri));
+					li++;
+					ri--;
+				}
+				else {
+					steps.push($stepFactory.newIdleStep().compare(li, ri));
+				}
+			}
+
+			tmpStep = $stepFactory.newIdleStep();
+			for (i = 0; i < array.length; i++) tmpStep.regular(i);
+			steps.push(tmpStep);
+
+			return li;
+		}
+
 
 		function swapElements(array, indexA, indexB) {
 			var tmp = array[indexA];
