@@ -13,7 +13,7 @@
 		vm.originalArray = generateUnsortedArray();
 		vm.sortedArray = [];
 		vm.pivotModes = [ "First element", "Last element", "Random element", "Median" ];
-		vm.selectedMode = vm.pivotModes[0];
+		vm.selectedMode = vm.pivotModes[1];
 		vm.sandbox = [];
 		vm.maxArraySize = 25;
 		vm.minArraySize = 5;
@@ -141,10 +141,6 @@
 					tmpStep = $stepFactory.newIdleStep().compare(i);
 					steps.push(i === partitionIndex ? tmpStep.accent(i) : tmpStep);
 				}
-
-				//tmpStep = $stepFactory.newIdleStep();
-				//steps.push(i === partitionIndex + 1 ? tmpStep.accent(i) : tmpStep.compare(i));
-
 			}
 
 			swapElements(array, partitionIndex, lowIndex);
@@ -159,37 +155,42 @@
 
 		function partitionLastElementAsPivot(array, lowIndex, highIndex, steps) {
 			var pivot = array[highIndex];
-			var partitionIndex = lowIndex;
+			var partitionIndex = lowIndex - 1;
 			var i;
 
-			var highlightStep = $stepFactory.newHighlightStep();
-			for (i = lowIndex; i < highIndex; i++) highlightStep.compare(i);
-			highlightStep.static(highIndex);
-			steps.push(highlightStep);
+			var tmpStep = $stepFactory.newIdleStep();
+			for (i = lowIndex; i < highIndex; i++) tmpStep.compare(i);
+			steps.push(tmpStep.static(highIndex));
 
 			for (i = lowIndex; i < highIndex; i++) {
-				steps.push($stepFactory.newHighlightStep().active(i));
+				steps.push($stepFactory.newIdleStep().active(i));
 
 				if (array[i].value < pivot.value) {
-					swapElements(array, partitionIndex, i);
-					steps.push($stepFactory.newSwapStep(partitionIndex, i));
-					steps.push($stepFactory.newHighlightStep().compare(partitionIndex));
 					partitionIndex++;
+					swapElements(array, partitionIndex, i);
+
+					tmpStep = $stepFactory.newSwapStep(partitionIndex, i);
+					steps.push(partitionIndex === i ? tmpStep : tmpStep.compare(i));
+
+					tmpStep = $stepFactory.newIdleStep().compare(i).accent(partitionIndex)
+					steps.push(partitionIndex > lowIndex ? tmpStep.compare(partitionIndex - 1) : tmpStep);
 				}
-				else
-					steps.push($stepFactory.newHighlightStep().compare(i));
+				else {
+					tmpStep = $stepFactory.newIdleStep().compare(i);
+					steps.push(i === partitionIndex ? tmpStep.accent(i) : tmpStep);
+				}
 			}
+
+			partitionIndex++;
 
 			if (array[highIndex].value < array[partitionIndex].value) {
 				swapElements(array, partitionIndex, highIndex);
 				steps.push($stepFactory.newSwapStep(partitionIndex, highIndex));
-				steps.push($stepFactory.newWaitStep());
-				steps.push($stepFactory.newWaitStep());
 			}
 
-			highlightStep = $stepFactory.newHighlightStep();
-			for (i = 0; i < array.length; i++) highlightStep.regular(i);
-			steps.push(highlightStep);
+			tmpStep = $stepFactory.newIdleStep();
+			for (i = 0; i < array.length; i++) tmpStep.regular(i);
+			steps.push(tmpStep);
 
 			return partitionIndex;
 		}
