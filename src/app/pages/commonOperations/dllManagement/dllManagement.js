@@ -17,6 +17,7 @@
 		vm.onAddElementClick = onAddElementClick;
 		vm.onMouseEnterElement = onMouseEnterElement;
 		vm.onMouseLeaveElement = onMouseLeaveElement;
+		vm.onShuffleClick = onShuffleClick;
 
 		fillRepresentationModels();
 
@@ -30,6 +31,10 @@
 
 		function onMouseLeaveElement(element) {
 			clearHighlights(element.node);
+		}
+
+		function onShuffleClick() {
+			shuffleArray(vm.listRepresentationModel);
 		}
 
 		function showHighlights(node) {
@@ -88,6 +93,17 @@
 			for (var i = 0; i < vm.listRepresentationModel.length; i++) {
 				if (vm.listRepresentationModel[i].node === node)
 					return vm.listRepresentationModel[i];
+			}
+		}
+
+		function shuffleArray(array) {
+			// Modern Fisher–Yates algorithm
+			var j, x, i;
+			for (i = array.length - 1; i > 0; i--) {
+				j = Math.floor(Math.random() * (i + 1));
+        x = array[i];
+        array[i] = array[j];
+        array[j] = x;
 			}
 		}
 	}

@@ -14,14 +14,30 @@
 
             <md-divider></md-divider>
 
-            <div layout="row" layout-align="center center">
+            <div layout="row" layout-align="center fill">
               <md-button class="md-primary md-raised"
-                         style="padding-right: 10px"
-                         ng-click="taskCtrl.onAddElementClick()"
-                         aria-label="Add element">
-                  <md-icon md-svg-src="assets/icons/ic_add_white_24px.svg"></md-icon>
-                  Add element
+                         style="padding: 0 20px"
+                         ng-click="taskCtrl.onShuffleClick()"
+                         aria-label="Shuffle">
+                  Shuffle preview
               </md-button>
+
+              <div layout="column" layout-align="center start">
+                <md-button class="md-primary md-raised"
+                           style="padding-right: 10px"
+                           ng-click="taskCtrl.onAddElementClick()"
+                           aria-label="Add element">
+                    <md-icon md-svg-src="assets/icons/ic_add_white_24px.svg"></md-icon>
+                    Add element
+                </md-button>
+
+                <md-button class="md-primary md-raised"
+                           style="padding-right: 10px"
+                           aria-label="Remove element">
+                    <md-icon md-svg-src="assets/icons/ic_add_white_24px.svg"></md-icon>
+                    Remove element
+                </md-button>
+              </div>
             </div>
         </div>
 
