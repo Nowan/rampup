@@ -12,8 +12,8 @@
 		vm.arraySize = 10;
 		vm.originalArray = generateUnsortedArray();
 		vm.sortedArray = [];
-		vm.pivotModes = [ "First element", "Last element", "Random element", "Median" ];
-		vm.selectedMode = vm.pivotModes[1];
+		vm.pivotModes = [ "First element", "Last element", "Middle element", "Random element" ];
+		vm.selectedMode = vm.pivotModes[2];
 		vm.sandbox = [];
 		vm.maxArraySize = 25;
 		vm.minArraySize = 5;
@@ -96,11 +96,16 @@
 		}
 
 		function quickSort(array, lowIndex, highIndex, steps) {
-			// Lomuto partition scheme
-			if (lowIndex < highIndex) {
-				var partitionIndex = partition.apply(this, arguments);
+			var partitionIndex = partition.apply(this, arguments);
+
+			if (partitionIndex - 1 > lowIndex) {
 				quickSort(array, lowIndex, partitionIndex - 1, steps);
-				quickSort(array, partitionIndex + 1, highIndex, steps);
+			}
+
+			if (partitionIndex < highIndex) {
+				var includePartition = !(vm.selectedMode === vm.pivotModes[0] || vm.selectedMode === vm.pivotModes[1]);
+				partitionIndex += includePartition ? 0 : 1;
+				quickSort(array, partitionIndex, highIndex, steps);
 			}
 		}
 
@@ -110,12 +115,15 @@
 					return partitionFirstElementAsPivot.apply(this, arguments);
 				case vm.pivotModes[1]:
 					return partitionLastElementAsPivot.apply(this, arguments);
+				case vm.pivotModes[2]:
+					return partitionMiddleElementAsPivot.apply(this, arguments);
 				default:
 					return partitionLastElementAsPivot.apply(this, arguments);
 			}
 		}
 
 		function partitionFirstElementAsPivot(array, lowIndex, highIndex, steps) {
+			// Lomuto partition scheme
 			var pivot = array[lowIndex];
 			var partitionIndex = lowIndex;
 			var i;
@@ -154,6 +162,7 @@
 		}
 
 		function partitionLastElementAsPivot(array, lowIndex, highIndex, steps) {
+			// Lomuto partition scheme
 			var pivot = array[highIndex];
 			var partitionIndex = lowIndex - 1;
 			var i;
@@ -193,6 +202,54 @@
 			steps.push(tmpStep);
 
 			return partitionIndex;
+		}
+
+		function partitionMiddleElementAsPivot(array, lowIndex, highIndex, steps) {
+			// Hoare partition scheme
+			var middleIndex = Math.floor((lowIndex + highIndex) * 0.5);
+			var pivot = array[middleIndex];
+			var li = lowIndex;
+			var ri = highIndex;
+			var i;
+
+			var tmpStep = $stepFactory.newIdleStep();
+			for (i = lowIndex; i <= highIndex; i++) tmpStep.compare(i);
+			steps.push(tmpStep.static(middleIndex));
+
+			while (li <= ri) {
+				steps.push($stepFactory.newIdleStep().active(li, ri));
+
+				while (array[li].value < pivot.value) {
+					li++;
+					steps.push($stepFactory.newIdleStep().active(li).compare(li - 1));
+				}
+
+				steps.push($stepFactory.newIdleStep().accent(li));
+
+				while (array[ri].value > pivot.value) {
+					ri--;
+					steps.push($stepFactory.newIdleStep().active(ri).compare(ri + 1));
+				}
+
+				steps.push($stepFactory.newIdleStep().accent(ri));
+
+				if (li <= ri) {
+					swapElements(array, li, ri);
+					steps.push($stepFactory.newSwapStep(li, ri));
+					steps.push($stepFactory.newIdleStep().compare(li, ri));
+					li++;
+					ri--;
+				}
+				else {
+					steps.push($stepFactory.newIdleStep().compare(li, ri));
+				}
+			}
+
+			tmpStep = $stepFactory.newIdleStep();
+			for (i = 0; i < array.length; i++) tmpStep.regular(i);
+			steps.push(tmpStep);
+
+			return li;
 		}
 
 		function swapElements(array, indexA, indexB) {
