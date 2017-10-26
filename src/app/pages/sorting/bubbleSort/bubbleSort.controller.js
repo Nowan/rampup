@@ -91,7 +91,7 @@
 			do {
 				swapped = false;
 				for (var i = 0; i < vm.sandbox.length - 1; i++) {
-					steps.push($stepFactory.newHighlightStep().active(i).compare(i + 1));
+					steps.push($stepFactory.newIdleStep().active(i).compare(i + 1));
 					if (vm.sandbox[i].value > vm.sandbox[i + 1].value) {
 						var temp = vm.sandbox[i];
 						vm.sandbox[i] = vm.sandbox[i + 1];
@@ -100,9 +100,9 @@
 						steps.push($stepFactory.newSwapStep(i, i + 1));
 					}
 					else {
-						steps.push($stepFactory.newWaitStep());
+						steps.push($stepFactory.newIdleStep());
 					}
-					steps.push($stepFactory.newHighlightStep().regular(i, i + 1));
+					steps.push($stepFactory.newIdleStep().regular(i, i + 1));
 				}
 			} while (swapped);
 
@@ -113,16 +113,18 @@
 			var step = animationSteps[stepIndex];
 
 			switch (step.action) {
-				case SortingStepAction.Highlight:
-					for (var elementIndex in step.highlights) {
-						vm.sortedArray[elementIndex].highlight = step.highlights[elementIndex];
-					}
+				case SortingStepAction.Idle:
+
 					break;
 				case SortingStepAction.Swap:
 					var tmp = vm.sortedArray[step.sourceIndex];
 					vm.sortedArray[step.sourceIndex] = vm.sortedArray[step.targetIndex];
 					vm.sortedArray[step.targetIndex] = tmp;
 					break;
+			}
+
+			for (var elementIndex in step.highlights) {
+				vm.sortedArray[elementIndex].highlight = step.highlights[elementIndex];
 			}
 		}
 	}
