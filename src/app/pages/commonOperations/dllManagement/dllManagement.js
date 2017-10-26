@@ -5,7 +5,7 @@
 		.controller('DllManagementController', DllManagementController);
 
 	/** @ngInject */
-	function DllManagementController(MemoryBuffer, DoublyLinkedList) {
+	function DllManagementController(MemoryBuffer, DoublyLinkedList, $randomWord) {
 		var vm = this;
 
 		vm.title = "Doubly Linked List Management";
@@ -13,7 +13,6 @@
 		vm.bufferRepresentationModel = [];
 		vm.memoryBuffer = new MemoryBuffer();
 		vm.list = new DoublyLinkedList(vm.memoryBuffer);
-		vm.counter = 1;
 
 		vm.onAddElementClick = onAddElementClick;
 		vm.onMouseEnterElement = onMouseEnterElement;
@@ -22,10 +21,7 @@
 		fillRepresentationModels();
 
 		function onAddElementClick() {
-			var node = vm.list.add(vm.counter);
-			vm.bufferRepresentationModel.push({ value: node._address, node: node });
-			updateRepresentationModel();
-			vm.counter++;
+			instatiateNewNode();
 		}
 
 		function onMouseEnterElement(element) {
@@ -69,18 +65,16 @@
 
 		function fillRepresentationModels() {
 			for (var i = 0; i < 5; i++) {
-				var node = vm.list.add(vm.counter);
-				vm.bufferRepresentationModel.push({ value: node._address, node: node });
-				vm.counter++;
+				instatiateNewNode();
 			}
-			updateRepresentationModel();
 		}
 
-		function updateRepresentationModel() {
-			vm.listRepresentationModel = [];
-			vm.list.forEach(function(node, index) {
-				vm.listRepresentationModel.push({ value: node.data, node: node });
-			}, this);
+		function instatiateNewNode() {
+			$randomWord.next(3, 6).then(function(word){
+				var node = vm.list.add(word);
+				vm.bufferRepresentationModel.push({ value: node._address, node: node });
+				vm.listRepresentationModel.push({ value: word, node: node });
+			});
 		}
 
 		function getBufferRepresentationElement(node) {
