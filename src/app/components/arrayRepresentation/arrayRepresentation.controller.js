@@ -9,14 +9,30 @@
 		var vm = this;
 
 		vm.maxValue = getMaxValue();
+		vm.rescaleElements = vm.rescaleElements === "true";
 
-		vm.getElementLength = getElementLength;
+		vm.getElementHeight = getElementHeight;
+		vm.getElementWidth = getElementWidth;
 
-		$scope.$watch(function() { return vm.model; }, updateMaxValue);
-		$scope.$watch(function() { return vm.model.length; }, updateMaxValue);
+		if (vm.rescaleElements) {
+			$scope.$watch(function() { return vm.model; }, updateMaxValue);
+			$scope.$watch(function() { return vm.model.length; }, updateMaxValue);
+		}
+
+		function getElementHeight(element) {
+			return vm.orientation === 'vertical' ? getElementWeigth(element) : getElementLength(element);
+		}
+
+		function getElementWidth(element) {
+			return vm.orientation === 'vertical' ? getElementLength(element) : getElementWeigth(element);
+		}
 
 		function getElementLength(element) {
-			return (element.value / vm.maxValue * 100) + '%';
+			return vm.rescaleElements ? (element.value / vm.maxValue * 100) + '%' : (vm.elementLength || '100%');
+		}
+
+		function getElementWeigth(element) {
+			return vm.elementWeight ? vm.elementWeight : '100%';
 		}
 
 		function updateMaxValue() {
