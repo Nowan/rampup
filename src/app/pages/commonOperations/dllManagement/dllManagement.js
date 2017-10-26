@@ -18,6 +18,7 @@
 		vm.onMouseEnterElement = onMouseEnterElement;
 		vm.onMouseLeaveElement = onMouseLeaveElement;
 		vm.onShuffleClick = onShuffleClick;
+		vm.onSortClick = onSortClick;
 
 		fillRepresentationModels();
 
@@ -35,6 +36,10 @@
 
 		function onShuffleClick() {
 			shuffleArray(vm.listRepresentationModel);
+		}
+
+		function onSortClick() {
+			rebuildListModel();
 		}
 
 		function showHighlights(node) {
@@ -79,6 +84,7 @@
 				var node = vm.list.add(word);
 				vm.bufferRepresentationModel.push({ value: node._address, node: node });
 				vm.listRepresentationModel.push({ value: word, node: node });
+				rebuildListModel();
 			});
 		}
 
@@ -94,6 +100,13 @@
 				if (vm.listRepresentationModel[i].node === node)
 					return vm.listRepresentationModel[i];
 			}
+		}
+
+		function rebuildListModel() {
+			vm.listRepresentationModel = [];
+			vm.list.forEach(function(node) {
+				vm.listRepresentationModel.push({ value: node.data, node: node });
+			});
 		}
 
 		function shuffleArray(array) {
