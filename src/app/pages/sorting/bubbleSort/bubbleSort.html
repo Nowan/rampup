@@ -1,7 +1,12 @@
 <md-content ng-controller="BubbleSortController as taskCtrl" layout="column" layout-align="center center">
     <div><h1>{{taskCtrl.title}}</h1></div>
 
-    <array-representation model="taskCtrl.originalArray" style="height: 300px"></array-representation>
+    <array-representation model="taskCtrl.originalArray"
+                          style="height: 300px"
+                          element-weight="30px"
+                          rescale-elements="true"
+                          label-position="outside">
+    </array-representation>
 
     <div>
         <md-input-container>
@@ -25,6 +30,11 @@
         </md-button>
     </div>
 
-    <array-representation model="taskCtrl.sortedArray" style="height: 300px"></array-representation>
+    <array-representation model="taskCtrl.sortedArray"
+                          style="height: 300px"
+                          element-weight="30px"
+                          rescale-elements="true"
+                          label-position="outside">>
+    </array-representation>
 
 </md-content>
