@@ -1,10 +1,48 @@
-<md-content ng-controller="FirstExerciseController as taskCtrl" layout="column" layout-align="center center">
-    <div><h1>{{taskCtrl.title}}</h1></div>
+<md-content ng-controller="FirstExerciseController as taskCtrl" layout layout-align="center start">
+    <div layout="column" layout-align="center center" flex="80">
+        <div><h1>{{taskCtrl.title}}</h1></div>
 
-    {{taskCtrl.inputSample}}
-    {{taskCtrl.sumSample}}
+        <div><h3>Input</h3></div>
 
-    <span ng-repeat="pair in taskCtrl.output track by $index">
-        {{pair.a}} {{pair.b}}
-    </span>
+        <div layout="row" layout-align="center end" layout-fill layout-padding>
+            <div>
+                Values
+            </div>
+
+            <md-chips ng-model="taskCtrl.inputModel"
+                      md-on-add="taskCtrl.onChipAdd($chip)"
+                      md-on-remove="taskCtrl.onChipRemove($index)"
+                      md-transform-chip="taskCtrl.transformChip($chip)"
+                      flex>
+                <md-chip-template>
+                    {{$chip.value}}
+                </md-chip-template>
+            </md-chips>
+
+            <div>
+                Sum
+            </div>
+            <input type="number" style="width: 50px; margin: 0; padding: 0;" ng-model="taskCtrl.sumSample">
+        </div>
+
+        <div layout="row" layout-align="center center">
+            <md-button class="md-raised"
+                       ng-click="taskCtrl.onRandomizeClick()">
+                Randomize
+            </md-button>
+
+            <md-button class="md-raised md-primary"
+                       ng-click="taskCtrl.onRunClick()">
+                Run
+            </md-button>
+        </div>
+
+        <div><h3>Output</h3></div>
+
+        <div layout="row" layout-padding>
+            <div ng-repeat="pair in taskCtrl.output track by $index">
+                ({{pair.a}}; {{pair.b}})
+            </div>
+        </div>
+    </div>
 </md-content>
