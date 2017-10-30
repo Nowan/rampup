@@ -1,0 +1,10 @@
+<md-content ng-controller="FirstExerciseController as taskCtrl" layout="column" layout-align="center center">
+    <div><h1>{{taskCtrl.title}}</h1></div>
+
+    {{taskCtrl.inputSample}}
+    {{taskCtrl.sumSample}}
+
+    <span ng-repeat="pair in taskCtrl.output track by $index">
+        {{pair.a}} {{pair.b}}
+    </span>
+</md-content>
