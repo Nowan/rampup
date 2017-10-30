@@ -18,7 +18,11 @@
 		};
 
 		MemoryBuffer.prototype.remove = function(object) {
-			this.removeByAddress(this.getAddressOf(object));
+			for (var address in this._buffer) {
+				if (this._buffer[address] === object){
+					this._buffer[address] = null;
+				}
+			}
 		};
 
 		MemoryBuffer.prototype.removeByAddress = function(address) {
@@ -36,7 +40,7 @@
 
 		MemoryBuffer.prototype.generateAddress = function() {
 			var address = '0x' + ("0000" + this._counter.toString(16)).substr(-4);
-    	this._counter++;
+    	    this._counter++;
 			return address;
 		};
 

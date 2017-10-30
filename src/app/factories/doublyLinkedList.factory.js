@@ -36,6 +36,23 @@
 			return node;
 		};
 
+		DoublyLinkedList.prototype.removeAt = function(index) {
+			var node = this.getNodeAt(index);
+
+			if (node.forwardLink) {
+				var fwNode = this._memoryBuffer.getByAddress(node.forwardLink);
+				updateNodeLinks(fwNode, node.backwardLink, null);
+			}
+
+			if (node.backwardLink) {
+				var bwNode = this._memoryBuffer.getByAddress(node.backwardLink);
+				updateNodeLinks(bwNode, null, node.forwardLink);
+			}
+
+			this._memoryBuffer.remove(node);
+			this._length--;
+		};
+
 		DoublyLinkedList.prototype.getLength = function() {
 			return this._length;
 		};
@@ -49,6 +66,7 @@
 			while (iterator < finalIteration) {
 				var nextLink = reverseSearch ? node.backwardLink : node.forwardLink;
 				node = this._memoryBuffer.getByAddress(nextLink);
+				iterator++;
 			}
 
 			return node || null;

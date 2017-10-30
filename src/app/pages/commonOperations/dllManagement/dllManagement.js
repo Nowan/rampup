@@ -15,6 +15,7 @@
 		vm.list = new DoublyLinkedList(vm.memoryBuffer);
 
 		vm.onAddElementClick = onAddElementClick;
+		vm.onRemoveElementClick = onRemoveElementClick;
 		vm.onMouseEnterElement = onMouseEnterElement;
 		vm.onMouseLeaveElement = onMouseLeaveElement;
 		vm.onShuffleClick = onShuffleClick;
@@ -24,6 +25,10 @@
 
 		function onAddElementClick() {
 			instatiateNewNode();
+		}
+
+		function onRemoveElementClick() {
+			removeRandomNode();
 		}
 
 		function onMouseEnterElement(element) {
@@ -86,6 +91,17 @@
 				vm.listRepresentationModel.push({ value: word, node: node });
 				rebuildListModel();
 			});
+		}
+
+		function removeRandomNode() {
+			var randIndex = Math.floor(Math.random() * vm.list.getLength());
+
+			var rprElement = getBufferRepresentationElement(vm.list.getNodeAt(randIndex));
+			vm.bufferRepresentationModel.splice(vm.bufferRepresentationModel.indexOf(rprElement), 1);
+
+			vm.list.removeAt(randIndex);
+			rebuildListModel();
+
 		}
 
 		function getBufferRepresentationElement(node) {
