@@ -20,7 +20,7 @@
 			if (index > this._length) throw "Invalid index " + index;
 
 			var node = new Node(object, null, null);
-			var fwNode = this._length > 0 ? this.getNodeAt(index) : null;
+			var fwNode = this._length > 0 && index < this._length ? this.getNodeAt(index) : null;
 			var bwNode = index > 0 ? this.getNodeAt(index - 1) : null;
 
 			node._address = this._memoryBuffer.add(node);
@@ -30,7 +30,7 @@
 			updateNodeLinks(fwNode, node, null);
 
 			if (index === 0) this._head = node;
-			if (index === this._length) this._tail = node;
+			if (this._length === 0 || index === this._length) this._tail = node;
 
 			this._length++;
 			return node;
@@ -65,7 +65,7 @@
 		DoublyLinkedList.prototype.getNodeAt = function(index) {
 			var reverseSearch = index > Math.ceil(this._length * 0.5);
 			var iterator = 0;
-			var finalIteration = reverseSearch ? this._length - index : index;
+			var finalIteration = reverseSearch ? this._length - index - 1 : index;
 			var node = reverseSearch ? this._tail : this._head;
 
 			while (iterator < finalIteration) {
@@ -97,17 +97,17 @@
 			}
 		};
 
-		DoublyLinkedList.prototype.printToConsole = function() {
-			var output = "";
+		DoublyLinkedList.prototype.getLog = function() {
+			var log = "";
 			this.forEach(function(node, index) {
-				output += index + ": " + node.data.toString();
-				output += this.isNodeFirst(node) ? ' (head)' : this.isNodeLast(node) ? ' (tail)' : '';
-				output += "\n\n     address: " + node._address;
-				output += "\n     FW pointer: " + node.forwardLink + (node.forwardLink ? ' (' + this._memoryBuffer.getByAddress(node.forwardLink).data + ')' : '');
-				output += "\n     BW pointer: " + node.backwardLink  + (node.backwardLink ? ' (' + this._memoryBuffer.getByAddress(node.backwardLink).data + ')' : '');
-				output += "\n\n"
+				log += index + ": " + node.data.toString();
+				log += this.isNodeFirst(node) ? ' (head)' : this.isNodeLast(node) ? ' (tail)' : '';
+				log += "\n\n     address: " + node._address;
+				log += "\n     FW pointer: " + node.forwardLink + (node.forwardLink ? ' (' + this._memoryBuffer.getByAddress(node.forwardLink).data + ')' : '');
+				log += "\n     BW pointer: " + node.backwardLink  + (node.backwardLink ? ' (' + this._memoryBuffer.getByAddress(node.backwardLink).data + ')' : '');
+				log += "\n\n"
 			}, this);
-			console.log(output);
+			return log;
 		};
 
 		function updateNodeLinks(node, backwardNode, forwardNode) {

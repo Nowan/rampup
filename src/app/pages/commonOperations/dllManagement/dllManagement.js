@@ -16,6 +16,7 @@
 		vm.selectedNode = null;
 		vm.insertionIndex = 0;
 		vm.sampleLabel = "";
+		vm.log = "";
 
 		vm.onAddElementClick = onAddElementClick;
 		vm.onRemoveClick = onRemoveClick;
@@ -53,7 +54,7 @@
 		}
 
 		function onInsertionIndexChange() {
-			vm.insertionIndex = Math.max(Math.min(vm.insertionIndex, vm.list.getLength() - 1), 0);
+			vm.insertionIndex = Math.max(Math.min(vm.insertionIndex, vm.list.getLength()), 0);
 		}
 
 		function onMouseEnterElement(element) {
@@ -120,12 +121,14 @@
 				vm.list.insert(word, index);
 				rebuildBufferModel();
 				rebuildListModel();
+				vm.log = vm.list.getLog();
 			}
 			else {
 				$randomWord.next(3, 6).then(function(word){
 					vm.list.insert(word, index);
 					rebuildBufferModel();
 					rebuildListModel();
+					vm.log = vm.list.getLog();
 				});
 			}
 		}

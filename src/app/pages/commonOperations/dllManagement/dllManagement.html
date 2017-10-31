@@ -44,13 +44,18 @@
                     <md-icon md-svg-src="assets/icons/ic_remove_white_24px.svg"></md-icon>
                     Remove element
                 </md-button>
-              </div>
+            </div>
+
+            <div><h3>Log</h3></div>
+            <span style="white-space: pre-line;">
+                {{taskCtrl.log}}
+            </span>
         </div>
 
         <md-divider></md-divider>
 
         <div layout="column" layout-align="start center" layout-fill>
-            <div><h3>Memory Array</h3></div>
+            <div><h3>Memory Buffer</h3></div>
             <array-representation model="taskCtrl.bufferRepresentationModel"
                                   orientation="vertical"
                                   element-weight="50px"
