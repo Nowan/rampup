@@ -99,22 +99,22 @@
         {
           "key": "dll-management",
           "title": "Doubly Linked List Management",
-          "templateUrl": "app/pages/commonOperations/dllManagement/dllManagement.html"
+          "templateUrl": "app/pages/dataStructures/doublyLinkedList/doublyLinkedList.html"
         },
         {
           "key": "stack-management",
           "title": "Stack Management",
-          "templateUrl": "app/pages/commonOperations/stackManagement/stackManagement.html"
+          "templateUrl": "app/pages/dataStructures/stack/stack.html"
         },
         {
           "key": "queue-management",
           "title": "Queue Management",
-          "templateUrl": "app/pages/commonOperations/queueManagement/queueManagement.html"
+          "templateUrl": "app/pages/dataStructures/queue/queue.html"
         },
         {
           "key": "bst-management",
           "title": "Binary Search Tree Management",
-          "templateUrl": "app/pages/commonOperations/bstManagement/bstManagement.html"
+          "templateUrl": "app/pages/dataStructures/binarySearchTree/binarySearchTree.html"
         }
       ]
     },
