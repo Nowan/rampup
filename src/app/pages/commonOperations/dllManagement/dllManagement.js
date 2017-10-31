@@ -13,9 +13,11 @@
 		vm.bufferRepresentationModel = [];
 		vm.memoryBuffer = new MemoryBuffer();
 		vm.list = new DoublyLinkedList(vm.memoryBuffer);
+		vm.selectedNode = null;
 
 		vm.onAddElementClick = onAddElementClick;
 		vm.onRemoveElementClick = onRemoveElementClick;
+		vm.onElementClick = onElementClick;
 		vm.onMouseEnterElement = onMouseEnterElement;
 		vm.onMouseLeaveElement = onMouseLeaveElement;
 		vm.onShuffleClick = onShuffleClick;
@@ -31,12 +33,21 @@
 			removeRandomNode();
 		}
 
+		function onElementClick(element) {
+			if (vm.selectedNode) clearHighlights(vm.selectedNode);
+			vm.selectedNode = element.node;
+			showHighlights(vm.selectedNode);
+		}
+
 		function onMouseEnterElement(element) {
 			showHighlights(element.node);
 		}
 
 		function onMouseLeaveElement(element) {
 			clearHighlights(element.node);
+			if (vm.selectedNode) {
+				showHighlights(vm.selectedNode);
+			}
 		}
 
 		function onShuffleClick() {
@@ -56,7 +67,8 @@
 		}
 
 		function triggerHighlights(node, isVisible) {
-			var highlight = vm.list.isNodeFirst(node) || vm.list.isNodeLast(node) ? 'static' : 'active';
+			var highlight = (vm.list.isNodeFirst(node) || vm.list.isNodeLast(node)) ? 'static' : 'active';
+			highlight = vm.selectedNode === node ? 'accent' : highlight;
 			highlight = isVisible ? highlight : 'regular';
 			changeRepresentationHighlights(node, highlight);
 
@@ -101,7 +113,6 @@
 
 			vm.list.removeAt(randIndex);
 			rebuildListModel();
-
 		}
 
 		function getBufferRepresentationElement(node) {
@@ -130,9 +141,9 @@
 			var j, x, i;
 			for (i = array.length - 1; i > 0; i--) {
 				j = Math.floor(Math.random() * (i + 1));
-        x = array[i];
-        array[i] = array[j];
-        array[j] = x;
+                x = array[i];
+                array[i] = array[j];
+                array[j] = x;
 			}
 		}
 	}
