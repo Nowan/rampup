@@ -16,10 +16,10 @@
 		vm.selectedNode = null;
 		vm.insertionIndex = 0;
 		vm.sampleLabel = "";
-		vm.log = "";
 
 		vm.onAddElementClick = onAddElementClick;
 		vm.onRemoveClick = onRemoveClick;
+		vm.onClearClick = onClearClick;
 		vm.onElementClick = onElementClick;
 		vm.onInsertionIndexChange = onInsertionIndexChange;
 		vm.onMouseEnterElement = onMouseEnterElement;
@@ -31,14 +31,9 @@
 		generateSampleLabel();
 
 		function onAddElementClick() {
-			if (vm.sampleLabel.length > 0) {
-				instatiateNewNode(vm.insertionIndex, vm.sampleLabel);
-			}
-			else {
-				generateSampleLabel().then(function() {
-					instatiateNewNode(vm.insertionIndex, vm.sampleLabel)
-				});
-			}
+			instatiateNewNode(vm.sampleLabel, vm.insertionIndex);
+			generateSampleLabel();
+			if (vm.selectedNode) showHighlights(vm.selectedNode);
 		}
 
 		function onRemoveClick() {
@@ -47,10 +42,21 @@
 			vm.selectedNode = null;
 		}
 
+		function onClearClick() {
+			if (vm.selectedNode) {
+				clearHighlights(vm.selectedNode);
+				vm.selectedNode = null;
+			}
+			vm.list.clear();
+			rebuildBufferModel();
+			rebuildListModel();
+		}
+
 		function onElementClick(element) {
 			if (vm.selectedNode) clearHighlights(vm.selectedNode);
 			vm.selectedNode = element.node;
 			showHighlights(vm.selectedNode);
+			vm.insertionIndex = vm.listRepresentationModel.indexOf(element);
 		}
 
 		function onInsertionIndexChange() {
@@ -110,27 +116,18 @@
 
 		function fillRepresentationModels() {
 			for (var i = 0; i < 5; i++) {
-				instatiateNewNode();
+				generateRandomWord().then(function(word) {
+					instatiateNewNode(word)
+				});
 			}
 		}
 
-		function instatiateNewNode(index, word) {
+		function instatiateNewNode(word, index) {
 			index = index || 0;
 
-			if (word) {
-				vm.list.insert(word, index);
-				rebuildBufferModel();
-				rebuildListModel();
-				vm.log = vm.list.getLog();
-			}
-			else {
-				$randomWord.next(3, 6).then(function(word){
-					vm.list.insert(word, index);
-					rebuildBufferModel();
-					rebuildListModel();
-					vm.log = vm.list.getLog();
-				});
-			}
+			vm.list.insert(word, index);
+			rebuildBufferModel();
+			rebuildListModel();
 		}
 
 		function removeNode(node) {

@@ -58,6 +58,17 @@
 			this._length--;
 		};
 
+		DoublyLinkedList.prototype.clear = function() {
+			var node = this._tail;
+			for (var i = 0; i < this._length; i++) {
+				this._memoryBuffer.remove(node);
+				node = this._memoryBuffer.getByAddress(node.backwardLink);
+			}
+			this._head = null;
+			this._tail = null;
+			this._length = 0;
+		};
+
 		DoublyLinkedList.prototype.getLength = function() {
 			return this._length;
 		};
