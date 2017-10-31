@@ -14,19 +14,30 @@
 		vm.memoryBuffer = new MemoryBuffer();
 		vm.list = new DoublyLinkedList(vm.memoryBuffer);
 		vm.selectedNode = null;
+		vm.insertionIndex = 0;
+		vm.sampleLabel = "";
 
 		vm.onAddElementClick = onAddElementClick;
 		vm.onRemoveClick = onRemoveClick;
 		vm.onElementClick = onElementClick;
+		vm.onInsertionIndexChange = onInsertionIndexChange;
 		vm.onMouseEnterElement = onMouseEnterElement;
 		vm.onMouseLeaveElement = onMouseLeaveElement;
 		vm.onShuffleClick = onShuffleClick;
 		vm.onSortClick = onSortClick;
 
 		fillRepresentationModels();
+		generateSampleLabel();
 
 		function onAddElementClick() {
-			instatiateNewNode();
+			if (vm.sampleLabel.length > 0) {
+				instatiateNewNode(vm.insertionIndex, vm.sampleLabel);
+			}
+			else {
+				generateSampleLabel().then(function() {
+					instatiateNewNode(vm.insertionIndex, vm.sampleLabel)
+				});
+			}
 		}
 
 		function onRemoveClick() {
@@ -39,6 +50,10 @@
 			if (vm.selectedNode) clearHighlights(vm.selectedNode);
 			vm.selectedNode = element.node;
 			showHighlights(vm.selectedNode);
+		}
+
+		function onInsertionIndexChange() {
+			vm.insertionIndex = Math.max(Math.min(vm.insertionIndex, vm.list.getLength() - 1), 0);
 		}
 
 		function onMouseEnterElement(element) {
@@ -98,12 +113,21 @@
 			}
 		}
 
-		function instatiateNewNode() {
-			$randomWord.next(3, 6).then(function(word){
-				vm.list.add(word);
+		function instatiateNewNode(index, word) {
+			index = index || 0;
+
+			if (word) {
+				vm.list.insert(word, index);
 				rebuildBufferModel();
 				rebuildListModel();
-			});
+			}
+			else {
+				$randomWord.next(3, 6).then(function(word){
+					vm.list.insert(word, index);
+					rebuildBufferModel();
+					rebuildListModel();
+				});
+			}
 		}
 
 		function removeNode(node) {
@@ -143,6 +167,19 @@
 			vm.bufferRepresentationModel.sort(function(a, b) {
 				return parseInt(a.node._address, 16) > parseInt(b.node._address, 16);
 			});
+		}
+
+		function generateSampleLabel() {
+			var promise = generateRandomWord();
+			promise.then(function(word) {
+				vm.sampleLabel = word;
+				return word;
+			});
+			return promise;
+		}
+
+		function generateRandomWord() {
+			return $randomWord.next(3, 6);
 		}
 
 		function shuffleArray(array) {
