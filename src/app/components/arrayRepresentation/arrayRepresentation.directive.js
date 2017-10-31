@@ -15,7 +15,14 @@
 			bindToController: true,
 			scope:{
 				model: '=',
-				orientation: '@'
+				orientation: '@',
+				rescaleElements: '@',
+				labelPosition: '@',
+				elementWeight: '@',
+				elementLength: '@',
+				onClick: '=',
+				onMouseEnter: '=',
+				onMouseLeave: '='
 			},
 			css: 'app/components/arrayRepresentation/arrayRepresentation.scss'
 		};

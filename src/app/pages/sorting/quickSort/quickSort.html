@@ -1,7 +1,12 @@
 <md-content ng-controller="QuickSortController as taskCtrl" layout="column" layout-align="center center">
     <div><h1>{{taskCtrl.title}}</h1></div>
 
-    <array-representation model="taskCtrl.originalArray" style="height: 300px"></array-representation>
+    <array-representation model="taskCtrl.originalArray"
+                          style="height: 300px"
+                          element-weight="30px"
+                          rescale-elements="true"
+                          label-position="outside">
+    </array-representation>
 
     <div layout="row" style="margin-top: 50px;">
         <div layout="column" layout-align="center fill">
@@ -40,6 +45,11 @@
         </div>
     </div>
 
-    <array-representation model="taskCtrl.sortedArray" style="height: 300px"></array-representation>
-
+    <array-representation model="taskCtrl.sortedArray"
+                          style="height: 300px"
+                          element-weight="30px"
+                          rescale-elements="true"
+                          label-position="outside">>
+    </array-representation>
+    
 </md-content>

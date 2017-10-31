@@ -97,9 +97,9 @@
       "title": "Common Operations",
       "tasks": [
         {
-          "key": "ddl-management",
+          "key": "dll-management",
           "title": "Doubly Linked List Management",
-          "templateUrl": "app/pages/commonOperations/ddlManagement/ddlManagement.html"
+          "templateUrl": "app/pages/commonOperations/dllManagement/dllManagement.html"
         },
         {
           "key": "stack-management",
