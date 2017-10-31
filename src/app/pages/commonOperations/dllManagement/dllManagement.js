@@ -16,7 +16,7 @@
 		vm.selectedNode = null;
 
 		vm.onAddElementClick = onAddElementClick;
-		vm.onRemoveElementClick = onRemoveElementClick;
+		vm.onRemoveClick = onRemoveClick;
 		vm.onElementClick = onElementClick;
 		vm.onMouseEnterElement = onMouseEnterElement;
 		vm.onMouseLeaveElement = onMouseLeaveElement;
@@ -29,8 +29,10 @@
 			instatiateNewNode();
 		}
 
-		function onRemoveElementClick() {
-			removeRandomNode();
+		function onRemoveClick() {
+			clearHighlights(vm.selectedNode);
+			removeNode(vm.selectedNode);
+			vm.selectedNode = null;
 		}
 
 		function onElementClick(element) {
@@ -78,7 +80,7 @@
 				var fwNode = vm.memoryBuffer.getByAddress(node.forwardLink);
 				changeRepresentationHighlights(fwNode, highlight);
 			}
-
+			
 			if (node.backwardLink) {
 				var bwNode = vm.memoryBuffer.getByAddress(node.backwardLink);
 				changeRepresentationHighlights(bwNode, highlight);
@@ -98,21 +100,16 @@
 
 		function instatiateNewNode() {
 			$randomWord.next(3, 6).then(function(word){
-				var node = vm.list.add(word);
-				vm.bufferRepresentationModel.push({ value: node._address, node: node });
-				vm.listRepresentationModel.push({ value: word, node: node });
+				vm.list.add(word);
+				rebuildBufferModel();
 				rebuildListModel();
 			});
 		}
 
-		function removeRandomNode() {
-			var randIndex = Math.floor(Math.random() * vm.list.getLength());
-
-			var rprElement = getBufferRepresentationElement(vm.list.getNodeAt(randIndex));
-			vm.bufferRepresentationModel.splice(vm.bufferRepresentationModel.indexOf(rprElement), 1);
-
-			vm.list.removeAt(randIndex);
+		function removeNode(node) {
+			vm.list.remove(node);
 			rebuildListModel();
+			rebuildBufferModel();
 		}
 
 		function getBufferRepresentationElement(node) {
@@ -133,6 +130,18 @@
 			vm.listRepresentationModel = [];
 			vm.list.forEach(function(node) {
 				vm.listRepresentationModel.push({ value: node.data, node: node });
+			});
+		}
+
+		function rebuildBufferModel() {
+			vm.bufferRepresentationModel = [];
+
+			vm.memoryBuffer.forEach(function(node, address) {
+				vm.bufferRepresentationModel.push({ value: address + ' (' + node.data.toString() + ')', node: node });
+			});
+
+			vm.bufferRepresentationModel.sort(function(a, b) {
+				return parseInt(a.node._address, 16) > parseInt(b.node._address, 16);
 			});
 		}
 

@@ -8,7 +8,6 @@
 
 		function MemoryBuffer() {
 			this._buffer = [];
-			this._counter = 0;
 		}
 
 		MemoryBuffer.prototype.add = function(object) {
@@ -20,7 +19,8 @@
 		MemoryBuffer.prototype.remove = function(object) {
 			for (var address in this._buffer) {
 				if (this._buffer[address] === object){
-					this._buffer[address] = null;
+					delete this._buffer[address];
+					return;
 				}
 			}
 		};
@@ -39,9 +39,14 @@
 		};
 
 		MemoryBuffer.prototype.generateAddress = function() {
-			var address = '0x' + ("0000" + this._counter.toString(16)).substr(-4);
-    	    this._counter++;
-			return address;
+			var rand = Math.floor(Math.random() * 10000);
+			return '0x' + ("0000" + rand.toString(16)).substr(-4);
+		};
+
+		MemoryBuffer.prototype.forEach = function(callback, context) {
+			for (var address in this._buffer) {
+				callback.call(context, this._buffer[address], address);
+			}
 		};
 
 		return MemoryBuffer;
