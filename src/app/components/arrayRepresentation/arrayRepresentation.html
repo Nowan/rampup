@@ -1,7 +1,7 @@
 <div layout="{{repCtrl.orientation=='vertical' ? 'column' : 'row'}}" layout-fill>
 
     <div ng-repeat="element in repCtrl.model" layout="column" layout-align="end center">
-        <div ng-show="repCtrl.labelPosition == 'outside'">{{element.value}}</div>
+        <div ng-show="repCtrl.labelPosition == 'outside'" style="white-space: pre-wrap; text-align: center;">{{element.value}}</div>
 
         <md-whiteframe class="md-whiteframe-4dp representationItem highlight"
                        ng-class="element.highlight || 'regular'"
@@ -10,7 +10,7 @@
                        ng-mouseenter="repCtrl.onMouseEnter(element)"
                        ng-mouseleave="repCtrl.onMouseLeave(element)"
                        layout layout-align="center center">
-            <div ng-hide="repCtrl.labelPosition == 'outside'">{{element.value}}</div>
+            <div ng-hide="repCtrl.labelPosition == 'outside'" style="white-space: pre-wrap; text-align: center;">{{element.value}}</div>
         </md-whiteframe>
 
     </div>
