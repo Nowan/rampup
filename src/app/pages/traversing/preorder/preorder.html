@@ -1,0 +1,17 @@
+<md-content ng-controller="PreorderController as taskCtrl" layout="column" layout-align="start center">
+    <div><h1>{{taskCtrl.title}}</h1></div>
+
+    <md-chips ng-model="taskCtrl.inputModel"
+              md-on-add="taskCtrl.onChipAdd()"
+              md-on-remove="taskCtrl.onChipRemove()"
+              flex>
+    </md-chips>
+
+    <tree-representation model="taskCtrl.tree" layout-fill></tree-representation>
+
+    <div><h1>Output</h1></div>
+
+    <div>
+        {{taskCtrl.output}}
+    </div>
+</md-content>
