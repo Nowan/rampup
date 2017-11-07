@@ -13,7 +13,6 @@
 		vm.rowNumber = 1;
 
 		$scope.$watch(function() { return vm.model; }, updateRepresentation);
-		$scope.$watch(function() { return vm.model.length; }, updateRepresentation);
 
 		function updateRepresentation() {
 			vm.rowNumber = getTreeDepth();
