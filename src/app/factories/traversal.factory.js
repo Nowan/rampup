@@ -26,10 +26,16 @@
 		};
 
 		Traversal.prototype.postorder = function(rootNode, callback, context) {
-			if (!!rootNode.leftChild) this.preorder(rootNode.leftChild, callback, context);
-			if (!!rootNode.rightChild) this.preorder(rootNode.rightChild, callback, context);
+			var stopFlag = false;
 
-			callback.call(context, rootNode, rootNode.leftChild, rootNode.rightChild);
+			if (!!rootNode.leftChild && !stopFlag)
+				stopFlag = this.preorder(rootNode.leftChild, callback, context);
+			if (!!rootNode.rightChild && !stopFlag)
+				stopFlag = this.preorder(rootNode.rightChild, callback, context);
+			if (!stopFlag)
+				stopFlag = callback.call(context, rootNode, rootNode.leftChild, rootNode.rightChild);
+
+			return stopFlag;
 		};
 
 		return new Traversal();

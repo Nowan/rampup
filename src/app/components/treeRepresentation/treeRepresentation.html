@@ -1,0 +1,10 @@
+
+<div>
+    <md-grid-list md-cols="{{repCtrl.colNumber}}" md-row-height="1:1" md-gutter="0" >
+        <md-grid-tile ng-repeat="tile in repCtrl.tiles" md-rowspan="1" md-colspan="1">
+            <div class="tile" layout layout-align="center center" ng-hide="tile.isGap" layout-fill>
+                <h3>{{tile.key}}</h3>
+            </div>
+        </md-grid-tile>
+    </md-grid-list>
+</div>

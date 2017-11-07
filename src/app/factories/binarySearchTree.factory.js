@@ -24,10 +24,14 @@
 		BinarySearchTree.prototype.insert = function(rootNode, insertionNode) {
 			if (!rootNode) return insertionNode;
 
-			if (insertionNode.key < rootNode.key)
+			if (insertionNode.key < rootNode.key) {
 				rootNode.leftChild = this.insert(rootNode.leftChild, insertionNode);
-			else if (insertionNode.key >= rootNode.key)
+				rootNode.leftChild.parent = rootNode;
+			}
+			else if (insertionNode.key >= rootNode.key) {
 				rootNode.rightChild = this.insert(rootNode.rightChild, insertionNode);
+				rootNode.rightChild.parent = rootNode;
+			}
 
 			return rootNode;
 		};

@@ -1,4 +1,6 @@
-<md-content ng-controller="BinarySearchTreeController as taskCtrl" layout="column" layout-align="center center">
+<md-content ng-controller="BinarySearchTreeController as taskCtrl" layout="column" layout-align="start center">
     <div><h1>{{taskCtrl.title}}</h1></div>
-    
+
+    <tree-representation model="taskCtrl.tree" layout-fill></tree-representation>
+
 </md-content>
