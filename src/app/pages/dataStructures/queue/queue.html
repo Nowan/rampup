@@ -1,0 +1,23 @@
+<md-content ng-controller="QueueController as taskCtrl" layout="column" layout-align="center center">
+    <div><h1>{{taskCtrl.title}}</h1></div>
+
+    <array-representation model="taskCtrl.representationModel" element-weight="70px" element-length="80px"></array-representation>
+
+    <div layout="row">
+        <md-button class="md-primary md-raised"
+                   style="padding-right: 10px; margin-top: 25px;"
+                   ng-click="taskCtrl.onEnqueueClick()"
+                   aria-label="Enqueue">
+            <md-icon md-svg-src="assets/icons/ic_add_white_24px.svg"></md-icon>
+            Enqueue
+        </md-button>
+
+        <md-button class="md-primary md-raised"
+                   style="padding-right: 10px; margin-top: 25px;"
+                   ng-click="taskCtrl.onDequeueClick()"
+                   aria-label="Dequeue">
+            <md-icon md-svg-src="assets/icons/ic_remove_white_24px.svg"></md-icon>
+            Dequeue
+        </md-button>
+    </div>
+</md-content>
