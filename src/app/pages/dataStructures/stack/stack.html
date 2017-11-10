@@ -1,0 +1,23 @@
+<md-content ng-controller="StackController as taskCtrl" layout="column" layout-align="center center">
+    <div><h1>{{taskCtrl.title}}</h1></div>
+
+    <div layout="row" style="padding-bottom: 40px;">
+        <md-button class="md-primary md-raised"
+                   style="padding-right: 10px; margin-top: 25px;"
+                   ng-click="taskCtrl.onPushClick()"
+                   aria-label="Push">
+            <md-icon md-svg-src="assets/icons/ic_add_white_24px.svg"></md-icon>
+            Push
+        </md-button>
+
+        <md-button class="md-primary md-raised"
+                   style="padding-right: 10px; margin-top: 25px;"
+                   ng-click="taskCtrl.onPopClick()"
+                   aria-label="Pop">
+            <md-icon md-svg-src="assets/icons/ic_remove_white_24px.svg"></md-icon>
+            Pop
+        </md-button>
+    </div>
+
+    <array-representation model="taskCtrl.representationModel" orientation="vertical" element-weight="50px" element-length="150px"></array-representation>
+</md-content>
