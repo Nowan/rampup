@@ -28,7 +28,7 @@
 				else {
 					r = getNodeDepth(node) - 1;
 					for (c = 0; c < vm.colNumber; c++) {
-						var parentNode = nodes[r - 1][c];
+						var parentNode = r - 1 >= 0 ? nodes[r - 1][c] : null;
 						if (parentNode && parentNode === node.parent) {
 							var offsetC = Math.ceil(vm.colNumber / Math.pow(2, r + 1));
 							var sign = node === parentNode.leftChild ? -1 : 1;
